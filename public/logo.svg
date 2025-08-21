@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200">
+  <style>.text{font-family:'Orbitron',sans-serif;font-weight:700;}</style>
+  <polygon points="180,40 220,40 240,80 200,80" fill="#000" />
+  <polygon points="220,80 260,80 240,120 200,120" fill="#cfcfcf" />
+  <text x="50" y="170" font-size="60" class="text" fill="#000" transform="skewX(-15)">SOUTHSIDE</text>
+  <text x="60" y="190" font-size="30" class="text" fill="#000" letter-spacing="5">CONSTRUCTION</text>
+</svg>

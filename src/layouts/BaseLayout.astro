@@ -1,0 +1,39 @@
+---
+import '../styles/global.css';
+const { title } = Astro.props;
+---
+<html lang="en" data-theme="southside">
+  <head>
+    <meta charset="UTF-8" />
+    <title>{title ? `${title} | Southside Construction` : 'Southside Construction'}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
+  </head>
+  <body class="min-h-screen flex flex-col">
+    <header class="p-4">
+      <nav class="navbar">
+        <div class="flex-1">
+          <a href="/" class="text-xl font-bold">
+            <img src="/logo.svg" alt="Southside Construction" class="h-8 inline-block mr-2 align-middle" />
+          </a>
+        </div>
+        <div class="flex-none">
+          <ul class="menu menu-horizontal px-1">
+            <li><a href="/">Home</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/gallery">Gallery</a></li>
+            <li><a href="/contact">Contact</a></li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+    <main class="flex-grow container mx-auto p-4">
+      <slot />
+    </main>
+    <footer class="p-4 text-center text-sm">
+      © {new Date().getFullYear()} Southside Construction
+    </footer>
+  </body>
+</html>
