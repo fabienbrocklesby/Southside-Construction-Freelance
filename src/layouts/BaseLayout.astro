@@ -10,10 +10,11 @@ const { title } = Astro.props;
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
   </head>
   <body class="min-h-screen flex flex-col">
-    <header class="p-4">
-      <nav class="navbar">
+    <header class="p-4 border-b border-gray-200">
+      <nav class="navbar text-base-content">
         <div class="flex-1">
           <a href="/" class="text-xl font-bold">
             <img src="/logo.svg" alt="Southside Construction" class="h-8 inline-block mr-2 align-middle" />
@@ -32,8 +33,10 @@ const { title } = Astro.props;
     <main class="flex-grow container mx-auto p-4">
       <slot />
     </main>
-    <footer class="p-4 text-center text-sm">
+    <footer class="p-4 text-center text-sm bg-gray-100">
       © {new Date().getFullYear()} Southside Construction
     </footer>
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+    <script> AOS.init(); </script>
   </body>
 </html>

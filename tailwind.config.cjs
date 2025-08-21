@@ -4,8 +4,8 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        base: '#000000',
-        accent: '#d1d1d1',
+        accent: '#111111',
+        light: '#f3f4f6',
       },
       fontFamily: {
         sans: ['"Orbitron"', 'sans-serif'],
@@ -17,9 +17,11 @@ module.exports = {
     themes: [
       {
         southside: {
-          primary: '#d1d1d1',
-          'base-100': '#000000',
-          'base-content': '#d1d1d1',
+          primary: '#111111',
+          secondary: '#f3f4f6',
+          accent: '#111111',
+          'base-100': '#ffffff',
+          'base-content': '#111111',
         },
       },
     ],
