@@ -2,6 +2,7 @@
 import '../styles/global.css';
 const { title } = Astro.props;
 ---
+<!DOCTYPE html>
 <html lang="en" data-theme="southside">
   <head>
     <meta charset="UTF-8" />
@@ -12,7 +13,7 @@ const { title } = Astro.props;
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
   </head>
-  <body class="min-h-screen flex flex-col">
+  <body class="min-h-screen flex flex-col bg-base-100 text-base-content">
     <header class="p-4 border-b border-gray-200">
       <nav class="navbar text-base-content">
         <div class="flex-1">
@@ -36,7 +37,7 @@ const { title } = Astro.props;
     <footer class="p-4 text-center text-sm bg-gray-100">
       © {new Date().getFullYear()} Southside Construction
     </footer>
-    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-    <script> AOS.init(); </script>
-  </body>
-</html>
+      <script src="https://unpkg.com/aos@2.3.4/dist/aos.js" defer></script>
+      <script>document.addEventListener('DOMContentLoaded', () => AOS.init());</script>
+    </body>
+  </html>
