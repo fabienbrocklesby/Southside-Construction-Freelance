@@ -1,19 +1,55 @@
-const ALLOWED_ORIGINS = [
-  'http://localhost:4321',
-  'https://localhost:4321',
-  'http://127.0.0.1:4321',
-  'https://127.0.0.1:4321',
-  'https://southsideconstruction.nz',
-  'https://www.southsideconstruction.nz',
-];
+function parseOrigins(list) {
+  return (list || '')
+    .split(',')
+    .map((s) => s.trim())
+    .filter(Boolean);
+}
 
-function buildCorsHeaders(origin) {
+function toHost(entry) {
+  try {
+    if (/^https?:\/\//i.test(entry)) return new URL(entry).host.toLowerCase();
+    return entry.toLowerCase();
+  } catch (_) {
+    return entry.toLowerCase();
+  }
+}
+
+function getAllowedOrigins(env) {
+  // Prefer env-driven list; otherwise fall back to primary domains
+  const envList = parseOrigins(env?.CORS_ORIGINS);
+  const defaults = [
+    'https://southsideconstruction.nz',
+    'https://www.southsideconstruction.nz',
+  ];
+  const list = envList.length ? envList : defaults;
+  const fullSet = new Set(list.map((s) => s.replace(/\/$/, '')));
+  const hostSet = new Set(list.map(toHost));
+  return { fullSet, hostSet };
+}
+
+function isLocalOrigin(origin) {
+  return /localhost|127\.0\.0\.1/.test(origin || '');
+}
+
+function isOriginAllowed(origin, allowed) {
+  if (!origin) return true; // no Origin header
+  if (isLocalOrigin(origin)) return true;
+  const normalized = origin.replace(/\/$/, '');
+  if (allowed.fullSet.has(normalized)) return true;
+  try {
+    const host = new URL(origin).host.toLowerCase();
+    if (allowed.hostSet.has(host)) return true;
+  } catch (_) {}
+  return false;
+}
+
+function buildCorsHeaders(origin, allowed) {
   // Reflect origin if in allowlist OR if localhost (dev convenience), else fallback to primary domain.
-  const isLocal = /localhost|127\.0\.0\.1/.test(origin || '');
-  const allowed = origin && (ALLOWED_ORIGINS.includes(origin) || isLocal) ? origin : 'https://southsideconstruction.nz';
+  const reflect = origin && (isOriginAllowed(origin, allowed));
+  const value = reflect ? origin : 'https://southsideconstruction.nz';
   return {
-    'Vary': 'Origin',
-    'Access-Control-Allow-Origin': allowed,
+    Vary: 'Origin',
+    'Access-Control-Allow-Origin': value,
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type',
   };
@@ -25,8 +61,9 @@ export async function onRequestPost(context) {
   const debug = url.searchParams.has('debug');
   let stage = 'init';
   const origin = request.headers.get('Origin') || '';
-  const originAllowed = !origin || ALLOWED_ORIGINS.includes(origin) || /localhost|127\.0\.0\.1/.test(origin);
-  const corsHeaders = buildCorsHeaders(origin);
+  const allowed = getAllowedOrigins(env);
+  const originAllowed = isOriginAllowed(origin, allowed);
+  const corsHeaders = buildCorsHeaders(origin, allowed);
 
   const respond = (status, payload, extraHeaders={}) => new Response(JSON.stringify(payload), {
     status,
@@ -211,6 +248,7 @@ export async function onRequestPost(context) {
 
 export async function onRequestOptions(context) {
   const origin = context.request.headers.get('Origin') || '';
-  const corsHeaders = buildCorsHeaders(origin);
+  const allowed = getAllowedOrigins(context.env);
+  const corsHeaders = buildCorsHeaders(origin, allowed);
   return new Response(null, { status: 200, headers: corsHeaders });
 }
