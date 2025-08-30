@@ -8,7 +8,7 @@ module.exports = {
         light: '#f3f4f6',
       },
       fontFamily: {
-        sans: ['"Orbitron"', 'sans-serif'],
+  sans: ['"Exo 2"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
       },
     },
   },

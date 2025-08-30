@@ -1,12 +1,161 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+const imageFiles = [
+  'Image1.png',
+  'IMG_0045.png','IMG_0051.png','IMG_0323.png','IMG_0415.png','IMG_0557.png','IMG_0558.png','IMG_0559.png','IMG_0609.png','IMG_0611.png','IMG_0716.png','IMG_0832.png','IMG_0861.png','IMG_0871.png','IMG_0872.png','IMG_0873.png','IMG_0874.png','IMG_0875.png','IMG_0876.png','IMG_0919.png','IMG_0920.png','IMG_0946.png','IMG_0947.png','IMG_1061.png','IMG_1063.png','IMG_1064.png','IMG_1074.png','IMG_1075.png','IMG_1103.png','IMG_1104.png','IMG_1105.png','IMG_1200.png','IMG_1202.png','IMG_1203.png','IMG_1204.png','IMG_2538.png','IMG_2541.png','IMG_2611.png','IMG_2612.png','IMG_2614.png','IMG_2615.png','IMG_4306.png','IMG_4307.png','IMG_4902.png','IMG_5019.png','IMG_5022.png','IMG_5660.png','IMG_6336.png','IMG_6337.png','IMG_6383.png','IMG_6384.png','IMG_6385.png','IMG_6389.png','IMG_7832.png','IMG_7833.png','IMG_8013.png','IMG_8598.png','IMG_9427.png','IMG_9428.png','IMG_9432.png','IMG_9442.png','IMG_9484.png','IMG_9485.png','IMG_9520.png','IMG_9521.png','IMG_9535.png',
+];
+const images = imageFiles.map((f) => ({ src: `/images/${f}`, alt: 'Southside Construction project photo' }));
 ---
 <BaseLayout title="Gallery">
-  <h1 class="text-4xl font-bold mb-4" data-aos="fade-down">Project Gallery</h1>
-  <p class="mb-8" data-aos="fade-down">A selection of our recent work.</p>
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-4" data-aos="fade-up">
-    <img src="https://source.unsplash.com/random/400x300?construction" alt="Project 1" class="w-full h-48 object-cover rounded-lg" />
-    <img src="https://source.unsplash.com/random/400x300?builder" alt="Project 2" class="w-full h-48 object-cover rounded-lg" />
-    <img src="https://source.unsplash.com/random/400x300?architecture" alt="Project 3" class="w-full h-48 object-cover rounded-lg" />
+  <!-- Header -->
+  <header class="mb-6" data-aos="fade-down">
+    <h1 class="text-4xl font-bold">Project Gallery</h1>
+    <p class="opacity-80 mt-2">A curated look at our builds across Nelson & Tasman. Click any photo to view larger.</p>
+  </header>
+
+  <!-- Masonry Gallery -->
+  <section aria-label="Gallery" class="[column-gap:1rem] md:[column-gap:1.25rem] columns-1 sm:columns-2 lg:columns-3 xl:columns-4" data-aos="fade-up">
+    {images.map((img, i) => (
+      <figure class="break-inside-avoid mb-4 rounded-xl border bg-white overflow-hidden group cursor-zoom-in" data-index={i} data-src={img.src}>
+        <img src={img.src} alt={img.alt} loading="lazy" class="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-[1.02]" />
+      </figure>
+    ))}
+  </section>
+
+  <!-- Lightbox Overlay -->
+  <div id="lightbox" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/90 p-4">
+    <button id="lb-close" class="absolute top-4 right-4 btn btn-sm">Close</button>
+    <button id="lb-prev" class="hidden sm:flex absolute left-3 md:left-6 top-1/2 -translate-y-1/2 btn btn-circle">❮</button>
+    <figure class="max-w-5xl w-full flex flex-col items-center">
+      <img id="lb-image" src="" alt="" class="max-h-[80vh] w-auto rounded-lg shadow-2xl" />
+      <figcaption id="lb-caption" class="mt-3 text-white/80 text-sm text-center"></figcaption>
+    </figure>
+    <button id="lb-next" class="hidden sm:flex absolute right-3 md:right-6 top-1/2 -translate-y-1/2 btn btn-circle">❯</button>
   </div>
+
+  <!-- CTA -->
+  <section class="mt-10 relative overflow-hidden rounded-xl" aria-label="Call to action" data-aos="fade-in">
+    <img src="/images/IMG_0611.png" alt="Outdoor living space" class="w-full h-56 md:h-72 object-cover" loading="lazy" />
+    <div class="absolute inset-0 bg-black/60"></div>
+    <div class="absolute inset-0 flex items-center">
+      <div class="max-w-5xl mx-auto px-4 text-white">
+        <h2 class="text-2xl md:text-3xl font-bold">Love what you see?</h2>
+        <p class="mt-2 opacity-90">Tell us about your project and we’ll outline practical next steps.</p>
+        <div class="mt-4">
+          <a href="/contact" class="btn btn-primary text-white">Request a quote</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script is:inline>
+    document.addEventListener('DOMContentLoaded', () => {
+      const lightbox = document.getElementById('lightbox');
+      const imgEl = document.getElementById('lb-image');
+      const capEl = document.getElementById('lb-caption');
+      const btnClose = document.getElementById('lb-close');
+      const btnPrev = document.getElementById('lb-prev');
+      const btnNext = document.getElementById('lb-next');
+      const items = Array.from(document.querySelectorAll('figure[data-index]'));
+      const total = items.length;
+  let currentPos = -1; // position within row-major order
+  let order = items.map((f) => Number(f.getAttribute('data-index')) || 0); // fallback natural order
+  let orderReady = false;
+  let lightboxOpen = false;
+
+      function buildOrder() {
+        // Build row-major order by sorting by top (y), then left (x)
+        const withRects = items.map((el) => ({
+          el,
+          idx: Number(el.getAttribute('data-index')) || 0,
+          rect: el.getBoundingClientRect(),
+        }));
+        // Tolerance to group items considered on the same row
+        const rowTolerance = 16;
+        withRects.sort((a, b) => {
+          const dy = a.rect.top - b.rect.top;
+          if (Math.abs(dy) < rowTolerance) {
+            return a.rect.left - b.rect.left;
+          }
+          return dy;
+        });
+        order = withRects.map((r) => r.idx);
+        orderReady = true;
+      }
+
+      function scheduleBuildOrder() {
+        // Recompute after layout settles, only when lightbox is not open
+        if (lightboxOpen) return;
+        setTimeout(buildOrder, 200);
+      }
+
+      function getFigureByIndex(i) {
+        return document.querySelector(`figure[data-index="${i}"]`);
+      }
+
+      function openAtByIndex(idx) {
+        if (!orderReady) buildOrder();
+        currentPos = Math.max(0, order.indexOf(idx));
+        const realIdx = order[currentPos];
+        const f = getFigureByIndex(realIdx);
+        if (!f) return;
+        const src = f.getAttribute('data-src');
+        const caption = `Image ${currentPos + 1}`;
+        imgEl.src = src;
+        imgEl.alt = caption;
+        capEl.textContent = caption;
+        lightbox.classList.remove('hidden');
+        lightbox.classList.add('flex');
+        lightboxOpen = true;
+      }
+
+      function close() {
+        lightbox.classList.add('hidden');
+        lightbox.classList.remove('flex');
+        imgEl.src = '';
+  lightboxOpen = false;
+  // Invalidate order so it will be recalculated next time to reflect any layout changes
+  orderReady = false;
+      }
+
+      function prev() {
+        if (!total) return;
+        if (!orderReady) buildOrder();
+        currentPos = (currentPos - 1 + order.length) % order.length;
+        openAtByIndex(order[currentPos]);
+      }
+      function next() {
+        if (!total) return;
+        if (!orderReady) buildOrder();
+        currentPos = (currentPos + 1) % order.length;
+        openAtByIndex(order[currentPos]);
+      }
+
+      items.forEach((f) => {
+        const idx = Number(f.getAttribute('data-index')) || 0;
+        f.addEventListener('click', () => openAtByIndex(idx));
+      });
+
+      btnClose.addEventListener('click', close);
+      btnPrev.addEventListener('click', prev);
+      btnNext.addEventListener('click', next);
+      lightbox.addEventListener('click', (e) => {
+        if (e.target === lightbox) close();
+      });
+      document.addEventListener('keydown', (e) => {
+        if (lightbox.classList.contains('hidden')) return;
+        if (e.key === 'Escape') close();
+        if (e.key === 'ArrowLeft') prev();
+        if (e.key === 'ArrowRight') next();
+      });
+
+      // Recalculate order on resize when lightbox is closed (layout can shift by breakpoint)
+      window.addEventListener('resize', () => {
+        if (!lightboxOpen) {
+          orderReady = false;
+          scheduleBuildOrder();
+        }
+      });
+    });
+  </script>
 </BaseLayout>

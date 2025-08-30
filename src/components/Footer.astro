@@ -1,0 +1,55 @@
+---
+const year = new Date().getFullYear();
+---
+<footer class="bg-gray-100 text-base-content mt-8 border-t border-gray-200">
+  <div class="container mx-auto px-4 py-10 grid gap-8 md:grid-cols-3">
+    <div>
+      <div class="flex items-center gap-3 mb-4">
+        <img src="/logos/LogoMinPNG.png" alt="Southside Construction" class="h-10 w-10" loading="lazy" />
+        <div class="text-lg font-semibold">Southside Construction</div>
+      </div>
+      <p class="text-sm leading-relaxed">
+        Quality residential and light commercial building in Nelson & Tasman. New builds, renovations, decks, and more — delivered with craftsmanship and integrity.
+      </p>
+      <div class="mt-4 flex gap-3 text-sm text-gray-600">
+        <span>Locally owned</span>
+        <span aria-hidden="true">•</span>
+        <span>Quality workmanship</span>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-2 gap-8 md:col-span-2 md:grid-cols-3">
+      <div>
+        <h3 class="font-semibold mb-3">Company</h3>
+        <ul class="space-y-2 text-sm">
+          <li><a class="link link-hover" href="/about">About</a></li>
+          <li><a class="link link-hover" href="/gallery">Gallery</a></li>
+          <li><a class="link link-hover" href="/contact">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="font-semibold mb-3">Services</h3>
+        <ul class="space-y-2 text-sm">
+          <li>New Builds</li>
+          <li>Renovations</li>
+          <li>Extensions</li>
+          <li>Decks & Outdoor</li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="font-semibold mb-3">Areas</h3>
+        <ul class="space-y-2 text-sm">
+          <li>Nelson</li>
+          <li>Tasman</li>
+          <li>Richmond</li>
+          <li>Motueka</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="border-t border-gray-200">
+    <div class="container mx-auto px-4 py-4 text-center text-sm">
+      © {year} Southside Construction · Nelson Tasman, New Zealand · <a class="link link-hover" href="/contact">Contact us</a>
+    </div>
+  </div>
+</footer>

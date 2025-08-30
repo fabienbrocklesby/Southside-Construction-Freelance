@@ -1,0 +1,45 @@
+---
+const current = Astro.url.pathname;
+---
+<header class="border-b border-gray-200">
+  <nav class="navbar items-center text-base-content container mx-auto px-4 min-h-16">
+    <div class="navbar-start gap-2">
+      <!-- Brand -->
+      <a href="/" class="btn btn-ghost normal-case text-xl pl-0 h-auto min-h-0" aria-label="Southside Construction home">
+        <picture>
+          <source media="(max-width: 640px)" srcset="/logos/LogoMinPNG.png" />
+          <img src="/logos/LogoSVG.svg" alt="Southside Construction" class="h-12 sm:h-14 w-auto" loading="eager" />
+        </picture>
+      </a>
+    </div>
+
+    <!-- Mobile: hamburger menu on the right -->
+    <div class="navbar-end lg:hidden">
+      <details class="dropdown dropdown-end">
+        <summary class="btn btn-ghost" aria-label="Open menu">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </summary>
+        <ul class="menu dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-56 p-2 shadow">
+          <li><a class={current === '/' ? 'active' : ''} aria-current={current === '/' ? 'page' : undefined} href="/">Home</a></li>
+          <li><a class={current.startsWith('/about') ? 'active' : ''} aria-current={current.startsWith('/about') ? 'page' : undefined} href="/about">About</a></li>
+          <li><a class={current.startsWith('/gallery') ? 'active' : ''} aria-current={current.startsWith('/gallery') ? 'page' : undefined} href="/gallery">Gallery</a></li>
+          <li><a class={current.startsWith('/contact') ? 'active' : ''} aria-current={current.startsWith('/contact') ? 'page' : undefined} href="/contact">Contact</a></li>
+        </ul>
+      </details>
+    </div>
+
+    <!-- Desktop menu -->
+    <div class="navbar-end hidden lg:flex">
+      <ul class="menu menu-horizontal px-1">
+  <li><a class={current === '/' ? 'active' : ''} aria-current={current === '/' ? 'page' : undefined} href="/">Home</a></li>
+  <li><a class={current.startsWith('/about') ? 'active' : ''} aria-current={current.startsWith('/about') ? 'page' : undefined} href="/about">About</a></li>
+  <li><a class={current.startsWith('/gallery') ? 'active' : ''} aria-current={current.startsWith('/gallery') ? 'page' : undefined} href="/gallery">Gallery</a></li>
+  <li><a class={current.startsWith('/contact') ? 'active' : ''} aria-current={current.startsWith('/contact') ? 'page' : undefined} href="/contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+  
+  <!-- Optional subtle divider on mobile to separate dropdown content area -->
+</header>

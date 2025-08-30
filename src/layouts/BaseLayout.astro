@@ -1,5 +1,7 @@
 ---
 import '../styles/global.css';
+import Navbar from "../components/Navbar.astro";
+import Footer from "../components/Footer.astro";
 const { title } = Astro.props;
 ---
 <!DOCTYPE html>
@@ -10,34 +12,22 @@ const { title } = Astro.props;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
   </head>
   <body class="min-h-screen flex flex-col bg-base-100 text-base-content">
-    <header class="p-4 border-b border-gray-200">
-      <nav class="navbar text-base-content">
-        <div class="flex-1">
-          <a href="/" class="text-xl font-bold">
-            <img src="/logo.svg" alt="Southside Construction" class="h-8 inline-block mr-2 align-middle" />
-          </a>
-        </div>
-        <div class="flex-none">
-          <ul class="menu menu-horizontal px-1">
-            <li><a href="/">Home</a></li>
-            <li><a href="/about">About</a></li>
-            <li><a href="/gallery">Gallery</a></li>
-            <li><a href="/contact">Contact</a></li>
-          </ul>
-        </div>
-      </nav>
-    </header>
+    <Navbar />
     <main class="flex-grow container mx-auto p-4">
       <slot />
     </main>
-    <footer class="p-4 text-center text-sm bg-gray-100">
-      © {new Date().getFullYear()} Southside Construction
-    </footer>
+    <Footer />
       <script src="https://unpkg.com/aos@2.3.4/dist/aos.js" defer></script>
-      <script>document.addEventListener('DOMContentLoaded', () => AOS.init());</script>
+      <script is:inline>
+        document.addEventListener('DOMContentLoaded', () => {
+          if (window.AOS) {
+            window.AOS.init();
+          }
+        });
+      </script>
     </body>
   </html>
