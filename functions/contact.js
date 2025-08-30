@@ -1,18 +1,27 @@
-const ALLOWED_ORIGINS = [
-  'http://localhost:4321',
-  'https://localhost:4321',
-  'http://127.0.0.1:4321',
-  'https://127.0.0.1:4321',
-  'https://southsideconstruction.nz',
-  'https://www.southsideconstruction.nz',
-];
+function parseOrigins(list) {
+  return (list || '')
+    .split(',')
+    .map((s) => s.trim())
+    .filter(Boolean);
+}
 
-function buildCorsHeaders(origin) {
+function getAllowedOrigins(env) {
+  // Prefer env-driven list; otherwise fall back to primary domains
+  const envList = parseOrigins(env?.CORS_ORIGINS);
+  const defaults = [
+    'https://southsideconstruction.nz',
+    'https://www.southsideconstruction.nz',
+  ];
+  const list = envList.length ? envList : defaults;
+  return new Set(list);
+}
+
+function buildCorsHeaders(origin, allowedOrigins) {
   // Reflect origin if in allowlist OR if localhost (dev convenience), else fallback to primary domain.
   const isLocal = /localhost|127\.0\.0\.1/.test(origin || '');
-  const allowed = origin && (ALLOWED_ORIGINS.includes(origin) || isLocal) ? origin : 'https://southsideconstruction.nz';
+  const allowed = origin && (allowedOrigins.has(origin) || isLocal) ? origin : 'https://southsideconstruction.nz';
   return {
-    'Vary': 'Origin',
+    Vary: 'Origin',
     'Access-Control-Allow-Origin': allowed,
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type',
@@ -25,8 +34,9 @@ export async function onRequestPost(context) {
   const debug = url.searchParams.has('debug');
   let stage = 'init';
   const origin = request.headers.get('Origin') || '';
-  const originAllowed = !origin || ALLOWED_ORIGINS.includes(origin) || /localhost|127\.0\.0\.1/.test(origin);
-  const corsHeaders = buildCorsHeaders(origin);
+  const allowedOrigins = getAllowedOrigins(env);
+  const originAllowed = !origin || allowedOrigins.has(origin) || /localhost|127\.0\.0\.1/.test(origin);
+  const corsHeaders = buildCorsHeaders(origin, allowedOrigins);
 
   const respond = (status, payload, extraHeaders={}) => new Response(JSON.stringify(payload), {
     status,
@@ -94,10 +104,10 @@ export async function onRequestPost(context) {
     }
 
   stage = 'env_check';
-  const { ZEPTO_API_KEY, FROM_EMAIL, SOUTHSIDE_EMAIL, RECIPIENT_EMAIL } = env; // FROM_EMAIL will be used as Zepto "from" address
-    const DEST_EMAIL = SOUTHSIDE_EMAIL || RECIPIENT_EMAIL || 'southside@fabienbrocklesby.com';
+  const { ZEPTO_API_KEY, FROM_EMAIL, SOUTHSIDE_EMAIL } = env; // FROM_EMAIL will be used as Zepto "from" address
+    const DEST_EMAIL = SOUTHSIDE_EMAIL; // Require explicit env var; no fallbacks
     if (!ZEPTO_API_KEY || !FROM_EMAIL || !DEST_EMAIL) {
-      const diag = { hasZEPTO_API_KEY: !!ZEPTO_API_KEY, hasFROM_EMAIL: !!FROM_EMAIL, hasDEST_EMAIL: !!DEST_EMAIL };
+      const diag = { hasZEPTO_API_KEY: !!ZEPTO_API_KEY, hasFROM_EMAIL: !!FROM_EMAIL, hasSOUTHSIDE_EMAIL: !!SOUTHSIDE_EMAIL };
       console.error('Config error - missing env', diag);
       return respond(500, { success: false, code: 'SERVER_MISCONFIGURED', message: 'Email service not configured.', diagnostics: diag });
     }
@@ -211,6 +221,7 @@ export async function onRequestPost(context) {
 
 export async function onRequestOptions(context) {
   const origin = context.request.headers.get('Origin') || '';
-  const corsHeaders = buildCorsHeaders(origin);
+  const allowedOrigins = getAllowedOrigins(context.env);
+  const corsHeaders = buildCorsHeaders(origin, allowedOrigins);
   return new Response(null, { status: 200, headers: corsHeaders });
 }
