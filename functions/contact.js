@@ -94,10 +94,10 @@ export async function onRequestPost(context) {
     }
 
   stage = 'env_check';
-  const { ZEPTO_API_KEY, FROM_EMAIL, SOUTHSIDE_EMAIL, RECIPIENT_EMAIL } = env; // FROM_EMAIL will be used as Zepto "from" address
-    const DEST_EMAIL = SOUTHSIDE_EMAIL || RECIPIENT_EMAIL || 'southside@fabienbrocklesby.com';
+  const { ZEPTO_API_KEY, FROM_EMAIL, SOUTHSIDE_EMAIL } = env; // FROM_EMAIL will be used as Zepto "from" address
+    const DEST_EMAIL = SOUTHSIDE_EMAIL; // Require explicit env var; no fallbacks
     if (!ZEPTO_API_KEY || !FROM_EMAIL || !DEST_EMAIL) {
-      const diag = { hasZEPTO_API_KEY: !!ZEPTO_API_KEY, hasFROM_EMAIL: !!FROM_EMAIL, hasDEST_EMAIL: !!DEST_EMAIL };
+      const diag = { hasZEPTO_API_KEY: !!ZEPTO_API_KEY, hasFROM_EMAIL: !!FROM_EMAIL, hasSOUTHSIDE_EMAIL: !!SOUTHSIDE_EMAIL };
       console.error('Config error - missing env', diag);
       return respond(500, { success: false, code: 'SERVER_MISCONFIGURED', message: 'Email service not configured.', diagnostics: diag });
     }
