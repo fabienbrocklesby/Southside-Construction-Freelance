@@ -5,3 +5,14 @@
 body {
   @apply bg-base-100 text-base-content font-sans;
 }
+
+/* Prevent horizontal scroll caused by offscreen animations or wide elements */
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Safer image scaling */
+img, video, svg {
+  max-width: 100%;
+}

@@ -12,7 +12,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <div class="text-white" data-aos="fade-up" data-aos-delay="100">
         <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight">Building excellence across Nelson Tasman</h1>
         <p class="mt-4 text-base sm:text-lg md:text-xl max-w-2xl">New house builds, sheds, renovations, decks and fencing, crafted with precision, delivered with care, and built to last in our local climate.</p>
-        <div class="mt-6 flex flex-wrap gap-3">
+  <div class="mt-6 flex flex-wrap gap-3">
           <a href="/contact" class="btn btn-primary text-white shadow-lg shadow-black/30 hover:shadow-black/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">Get a free quote</a>
           <a href="/gallery" class="btn bg-white/95 text-black border border-white/80 hover:bg-white hover:border-white shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">View our work</a>
         </div>
@@ -49,7 +49,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <h2 id="services-heading" class="text-3xl md:text-4xl font-bold" data-aos="fade-right">What we build</h2>
         <p class="opacity-80 max-w-2xl mt-2" data-aos="fade-right" data-aos-delay="100">From dream homes to durable sheds and outdoor living, we deliver thoughtful builds that suit your site, budget, and lifestyle. Need something not listed? We take on custom projects after a quick chat to scope it properly.</p>
       </div>
-      <div class="flex items-center gap-3" data-aos="fade-left">
+      <div class="flex items-center gap-3 flex-wrap" data-aos="fade-left">
         <a href="/contact" class="btn btn-sm md:btn-md btn-outline">Start your project</a>
         <a href="/contact" class="hidden sm:inline-flex btn btn-sm md:btn-md">Ask about custom work</a>
       </div>
@@ -146,7 +146,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             <span><strong>Aftercare:</strong> we stand behind our work — no loose ends.</span>
           </li>
         </ul>
-        <div class="mt-6 flex gap-3">
+  <div class="mt-6 flex gap-3 flex-wrap">
           <a href="/about" class="btn btn-outline">Meet the team</a>
           <a href="/contact" class="btn btn-primary">Book a site visit</a>
         </div>
@@ -261,7 +261,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <div class="max-w-5xl mx-auto px-4 text-white">
         <h2 class="text-2xl md:text-3xl font-bold">Ready to build? Let’s talk.</h2>
         <p class="mt-2 opacity-90">Tell us about your site, budget, and timeline — we’ll come back with practical next steps.</p>
-        <div class="mt-4">
+  <div class="mt-4 flex flex-wrap gap-3">
           <a href="/contact" class="btn btn-primary">Request a quote</a>
         </div>
       </div>
@@ -271,15 +271,15 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <!-- Secondary CTA cards -->
   <section class="py-12" aria-label="Explore more">
     <div class="grid gap-6 md:grid-cols-3" data-aos="fade-up">
-      <a href="/gallery" class="rounded-xl border p-6 hover:shadow-md transition-shadow bg-white">
+      <a href="/gallery" class="rounded-xl border p-6 hover:shadow-md transition-shadow bg-white block">
         <h3 class="font-semibold">See our gallery</h3>
         <p class="mt-1 text-sm opacity-80">Get inspired by recent builds across Nelson Tasman.</p>
       </a>
-      <a href="/about" class="rounded-xl border p-6 hover:shadow-md transition-shadow bg-white">
+      <a href="/about" class="rounded-xl border p-6 hover:shadow-md transition-shadow bg-white block">
         <h3 class="font-semibold">About Southside</h3>
         <p class="mt-1 text-sm opacity-80">Local team, straight talk, and quality workmanship.</p>
       </a>
-      <a href="/contact" class="rounded-xl border p-6 hover:shadow-md transition-shadow bg-white">
+      <a href="/contact" class="rounded-xl border p-6 hover:shadow-md transition-shadow bg-white block">
         <h3 class="font-semibold">Get in touch</h3>
         <p class="mt-1 text-sm opacity-80">Book a site visit or request a detailed quote.</p>
       </a>

@@ -23,7 +23,7 @@ const images = imageFiles.map((f) => ({ src: `/images/${f}`, alt: 'Southside Con
   </section>
 
   <!-- Lightbox Overlay -->
-  <div id="lightbox" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/90 p-4">
+  <div id="lightbox" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/90 p-4 overflow-hidden">
     <button id="lb-close" class="absolute top-4 right-4 btn btn-sm">Close</button>
     <button id="lb-prev" class="hidden sm:flex absolute left-3 md:left-6 top-1/2 -translate-y-1/2 btn btn-circle">❮</button>
     <figure class="max-w-5xl w-full flex flex-col items-center">
@@ -41,7 +41,7 @@ const images = imageFiles.map((f) => ({ src: `/images/${f}`, alt: 'Southside Con
       <div class="max-w-5xl mx-auto px-4 text-white">
         <h2 class="text-2xl md:text-3xl font-bold">Love what you see?</h2>
         <p class="mt-2 opacity-90">Tell us about your project and we’ll outline practical next steps.</p>
-        <div class="mt-4">
+  <div class="mt-4 flex flex-wrap gap-3">
           <a href="/contact" class="btn btn-primary text-white">Request a quote</a>
         </div>
       </div>
