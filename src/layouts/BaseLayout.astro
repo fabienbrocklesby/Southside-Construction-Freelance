@@ -1,0 +1,33 @@
+---
+import '../styles/global.css';
+import Navbar from "../components/Navbar.astro";
+import Footer from "../components/Footer.astro";
+const { title } = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="en" data-theme="southside">
+  <head>
+    <meta charset="UTF-8" />
+    <title>{title ? `${title} | Southside Construction` : 'Southside Construction'}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
+  </head>
+  <body class="min-h-screen flex flex-col bg-base-100 text-base-content">
+    <Navbar />
+    <main class="flex-grow container mx-auto p-4">
+      <slot />
+    </main>
+    <Footer />
+      <script src="https://unpkg.com/aos@2.3.4/dist/aos.js" defer></script>
+      <script is:inline>
+        document.addEventListener('DOMContentLoaded', () => {
+          if (window.AOS) {
+            window.AOS.init();
+          }
+        });
+      </script>
+    </body>
+  </html>

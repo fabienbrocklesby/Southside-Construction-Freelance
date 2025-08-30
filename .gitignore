@@ -1,0 +1,69 @@
+# Node dependencies and logs
+node_modules/
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Astro / Vite build output and caches
+dist/
+.astro/
+.vite/
+.cache/
+
+# TypeScript
+*.tsbuildinfo
+
+# Testing
+coverage/
+.nyc_output/
+
+# Environment and secrets
+.env
+.env.local
+.env.*.local
+.envrc
+.direnv/
+# Keep example envs tracked
+!.env.example
+
+# OS / Editor junk
+.DS_Store
+.DS_Store?
+.AppleDouble
+.LSOverride
+Icon?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+ehthumbs.db
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.#*
+
+# Deployment/platform folders
+.vercel/
+.netlify/
+
+# Sass/PostCSS caches
+.sass-cache/
+.stylelintcache
+.eslintcache
+
+# Temp
+tmp/
+temp/
+
+# Ensure lockfiles remain committed
+!package-lock.json
+!pnpm-lock.yaml
+!yarn.lock

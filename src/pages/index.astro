@@ -1,0 +1,288 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout title="Home">
+  <!-- Hero -->
+  <section class="relative overflow-hidden rounded-xl" aria-label="Hero: Southside Construction" data-aos="fade-in">
+    <picture>
+      <img src="/images/Image1.png" alt="Modern home exterior built by Southside Construction" class="w-full h-[60vh] min-h-[380px] object-cover" loading="eager" />
+    </picture>
+    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-black/20"></div>
+    <div class="absolute inset-0 max-w-5xl mx-auto px-4 flex items-end pb-10">
+      <div class="text-white" data-aos="fade-up" data-aos-delay="100">
+        <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight">Building excellence across Nelson Tasman</h1>
+        <p class="mt-4 text-base sm:text-lg md:text-xl max-w-2xl">New house builds, sheds, renovations, decks and fencing, crafted with precision, delivered with care, and built to last in our local climate.</p>
+        <div class="mt-6 flex flex-wrap gap-3">
+          <a href="/contact" class="btn btn-primary text-white shadow-lg shadow-black/30 hover:shadow-black/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">Get a free quote</a>
+          <a href="/gallery" class="btn bg-white/95 text-black border border-white/80 hover:bg-white hover:border-white shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">View our work</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Trust badges / quick facts -->
+  <section class="py-10" aria-label="Quick facts">
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div class="rounded-lg border p-4" data-aos="fade-up">
+        <div class="text-3xl font-bold">10+ yrs</div>
+        <div class="text-sm opacity-80">Experience in residential building</div>
+      </div>
+      <div class="rounded-lg border p-4" data-aos="fade-up" data-aos-delay="100">
+        <div class="text-3xl font-bold">Local</div>
+        <div class="text-sm opacity-80">Nelson & Tasman owned and operated</div>
+      </div>
+      <div class="rounded-lg border p-4" data-aos="fade-up" data-aos-delay="200">
+        <div class="text-3xl font-bold">Licensed</div>
+        <div class="text-sm opacity-80">Qualified, safety-first, code compliant</div>
+      </div>
+      <div class="rounded-lg border p-4" data-aos="fade-up" data-aos-delay="300">
+        <div class="text-3xl font-bold">On-time</div>
+        <div class="text-sm opacity-80">Clear timelines and tidy sites</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section class="py-14" aria-labelledby="services-heading">
+    <div class="flex items-end justify-between gap-4 mb-8">
+      <div>
+        <h2 id="services-heading" class="text-3xl md:text-4xl font-bold" data-aos="fade-right">What we build</h2>
+        <p class="opacity-80 max-w-2xl mt-2" data-aos="fade-right" data-aos-delay="100">From dream homes to durable sheds and outdoor living, we deliver thoughtful builds that suit your site, budget, and lifestyle. Need something not listed? We take on custom projects after a quick chat to scope it properly.</p>
+      </div>
+      <div class="flex items-center gap-3" data-aos="fade-left">
+        <a href="/contact" class="btn btn-sm md:btn-md btn-outline">Start your project</a>
+        <a href="/contact" class="hidden sm:inline-flex btn btn-sm md:btn-md">Ask about custom work</a>
+      </div>
+    </div>
+
+    <div class="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+      <!-- New house building -->
+      <article class="group rounded-xl border overflow-hidden bg-white" data-aos="zoom-in">
+        <figure class="aspect-[4/3] overflow-hidden">
+          <img src="/images/IMG_1105.png" alt="New house build exterior" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+        </figure>
+        <div class="p-5 space-y-2">
+          <h3 class="text-xl font-semibold">New house building</h3>
+          <p class="text-sm opacity-80">Architecturally-led or design-and-build, we manage details from foundations to finishes — warm, efficient, and fit for Nelson Tasman conditions.</p>
+          <ul class="text-sm list-disc pl-5 space-y-1 opacity-90">
+            <li>Design coordination and council consent</li>
+            <li>Energy-efficient framing and insulation</li>
+            <li>High-quality interior fit-out</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- Sheds -->
+      <article class="group rounded-xl border overflow-hidden bg-white" data-aos="zoom-in" data-aos-delay="100">
+        <figure class="aspect-[4/3] overflow-hidden">
+          <img src="/images/IMG_5660.png" alt="Custom shed build" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+        </figure>
+        <div class="p-5 space-y-2">
+          <h3 class="text-xl font-semibold">Sheds</h3>
+          <p class="text-sm opacity-80">Workshops, farm sheds, and storage buildings built tough — sized to your needs with durable cladding and secure access systems.</p>
+          <ul class="text-sm list-disc pl-5 space-y-1 opacity-90">
+            <li>Concrete pads and drainage</li>
+            <li>Roller doors, windows, ventilation</li>
+            <li>Rural and residential sites</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- Renovations -->
+      <article class="group rounded-xl border overflow-hidden bg-white" data-aos="zoom-in" data-aos-delay="200">
+        <figure class="aspect-[4/3] overflow-hidden">
+          <img src="/images/IMG_9432.png" alt="Renovated interior space" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+        </figure>
+        <div class="p-5 space-y-2">
+          <h3 class="text-xl font-semibold">Renovations</h3>
+          <p class="text-sm opacity-80">Transform kitchens, bathrooms, and living spaces. We improve flow, light, and performance without disrupting your daily life.</p>
+          <ul class="text-sm list-disc pl-5 space-y-1 opacity-90">
+            <li>Structural alterations and relevels</li>
+            <li>Warm, dry, and weathertight upgrades</li>
+            <li>Seamless extensions and re-clads</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- Decks & Fencing -->
+      <article class="group rounded-xl border overflow-hidden bg-white" data-aos="zoom-in" data-aos-delay="300">
+        <figure class="aspect-[4/3] overflow-hidden">
+          <img src="/images/IMG_7832.png" alt="Timber deck and fencing" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+        </figure>
+        <div class="p-5 space-y-2">
+          <h3 class="text-xl font-semibold">Decks & fencing</h3>
+          <p class="text-sm opacity-80">Extend your living outdoors with durable decking and privacy fencing — perfect for summer in Tasman.</p>
+          <ul class="text-sm list-disc pl-5 space-y-1 opacity-90">
+            <li>Hardwood, pine, and composite options</li>
+            <li>Stairs, handrails, and screens</li>
+            <li>Engineered substructures</li>
+          </ul>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section class="py-14" aria-labelledby="about-heading">
+    <div class="grid gap-8 md:grid-cols-2 items-center">
+      <div class="order-2 md:order-1" data-aos="fade-right">
+        <h2 id="about-heading" class="text-3xl md:text-4xl font-bold">Built local. Built right.</h2>
+        <p class="mt-4 opacity-90">We’re a Nelson Tasman building team focused on quality craftsmanship, tidy sites, and straight talk. Whether it’s a brand-new home or a practical shed, we keep you informed, stick to timelines, and treat your project like our own.</p>
+        <ul class="mt-6 grid gap-3 sm:grid-cols-2">
+          <li class="flex gap-3">
+            <span class="mt-1 inline-block h-2 w-2 rounded-full bg-primary"></span>
+            <span><strong>Clear process:</strong> design, consent, build — guided end-to-end.</span>
+          </li>
+          <li class="flex gap-3">
+            <span class="mt-1 inline-block h-2 w-2 rounded-full bg-primary"></span>
+            <span><strong>Quality trades:</strong> trusted local subcontractors and suppliers.</span>
+          </li>
+          <li class="flex gap-3">
+            <span class="mt-1 inline-block h-2 w-2 rounded-full bg-primary"></span>
+            <span><strong>Transparent pricing:</strong> detailed scopes and fair variations.</span>
+          </li>
+          <li class="flex gap-3">
+            <span class="mt-1 inline-block h-2 w-2 rounded-full bg-primary"></span>
+            <span><strong>Aftercare:</strong> we stand behind our work — no loose ends.</span>
+          </li>
+        </ul>
+        <div class="mt-6 flex gap-3">
+          <a href="/about" class="btn btn-outline">Meet the team</a>
+          <a href="/contact" class="btn btn-primary">Book a site visit</a>
+        </div>
+      </div>
+      <div class="order-1 md:order-2" data-aos="fade-left">
+        <img src="/images/IMG_6384.png" alt="Southside team on site" class="rounded-xl w-full h-auto object-cover" loading="lazy" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Process -->
+  <section class="py-14" aria-labelledby="process-heading">
+    <h2 id="process-heading" class="text-3xl md:text-4xl font-bold mb-8" data-aos="fade-up">How we work</h2>
+    <ol class="grid gap-6 md:grid-cols-4" data-aos="fade-up" data-aos-delay="100">
+      <li class="rounded-xl border p-5">
+        <div class="text-3xl font-bold">01</div>
+        <h3 class="mt-2 font-semibold">Consult & scope</h3>
+        <p class="text-sm opacity-80">We listen, visit your site, and outline options, budget ranges, and timelines.</p>
+      </li>
+      <li class="rounded-xl border p-5">
+        <div class="text-3xl font-bold">02</div>
+        <h3 class="mt-2 font-semibold">Design & consent</h3>
+        <p class="text-sm opacity-80">We coordinate designers and engineers, then manage council approvals.</p>
+      </li>
+      <li class="rounded-xl border p-5">
+        <div class="text-3xl font-bold">03</div>
+        <h3 class="mt-2 font-semibold">Build & manage</h3>
+        <p class="text-sm opacity-80">Qualified builders on site, clear communication, tidy and safe work areas.</p>
+      </li>
+      <li class="rounded-xl border p-5">
+        <div class="text-3xl font-bold">04</div>
+        <h3 class="mt-2 font-semibold">Handover & support</h3>
+        <p class="text-sm opacity-80">Final QA, documentation, and support after you move in or start using it.</p>
+      </li>
+    </ol>
+  </section>
+
+  <!-- Project highlights / features -->
+  <section class="py-14" aria-labelledby="highlights-heading">
+    <div class="grid gap-8 md:grid-cols-2 items-center">
+      <div data-aos="fade-right">
+        <h2 id="highlights-heading" class="text-3xl md:text-4xl font-bold">Smart details that make a difference</h2>
+        <p class="mt-4 opacity-90">From weather-resilient cladding to thermally efficient assemblies, we build with performance in mind. The result: homes and structures that are comfortable, quiet, and low maintenance.</p>
+        <ul class="mt-6 space-y-3">
+          <li class="flex items-start gap-3"><span class="mt-1 h-2 w-2 rounded-full bg-primary"></span><span>Moisture management and robust flashings for Tasman’s weather.</span></li>
+          <li class="flex items-start gap-3"><span class="mt-1 h-2 w-2 rounded-full bg-primary"></span><span>Upgraded insulation, airtightness, and window specs for comfort.</span></li>
+          <li class="flex items-start gap-3"><span class="mt-1 h-2 w-2 rounded-full bg-primary"></span><span>Quality hardware and finishes chosen for longevity and value.</span></li>
+        </ul>
+      </div>
+      <div class="grid grid-cols-2 gap-4" data-aos="fade-left">
+        <img src="/images/IMG_1103.png" alt="Exterior cladding detail" class="rounded-lg h-full w-full object-cover" loading="lazy" />
+        <img src="/images/IMG_6385.png" alt="Interior finish detail" class="rounded-lg h-full w-full object-cover" loading="lazy" />
+        <img src="/images/IMG_0611.png" alt="Decking and outdoor area" class="rounded-lg h-full w-full object-cover col-span-2" loading="lazy" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Image strip -->
+  <section class="py-10" aria-label="Gallery strip">
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3" data-aos="fade-up">
+      <img src="/images/IMG_6389.png" alt="Project photo 1" class="rounded-lg h-28 w-full object-cover" loading="lazy" />
+      <img src="/images/IMG_0874.png" alt="Project photo 2" class="rounded-lg h-28 w-full object-cover" loading="lazy" />
+      <img src="/images/IMG_0920.png" alt="Project photo 3" class="rounded-lg h-28 w-full object-cover" loading="lazy" />
+      <img src="/images/IMG_0946.png" alt="Project photo 4" class="rounded-lg h-28 w-full object-cover" loading="lazy" />
+      <img src="/images/IMG_5022.png" alt="Project photo 5" class="rounded-lg h-28 w-full object-cover" loading="lazy" />
+      <img src="/images/IMG_8598.png" alt="Project photo 6" class="rounded-lg h-28 w-full object-cover" loading="lazy" />
+    </div>
+  </section>
+
+  <!-- Testimonials (lightweight, optional copy) -->
+  <section class="py-14" aria-labelledby="testimonials-heading">
+    <h2 id="testimonials-heading" class="text-3xl md:text-4xl font-bold mb-8" data-aos="fade-up">What clients say</h2>
+    <div class="grid gap-6 md:grid-cols-3" data-aos="fade-up" data-aos-delay="100">
+      <blockquote class="rounded-xl border p-5 bg-white"><p class="opacity-90">“Professional and easy to deal with. Our renovation finished on time and the site was kept tidy throughout.”</p><footer class="mt-3 text-sm font-semibold">Homeowner, Nelson</footer></blockquote>
+      <blockquote class="rounded-xl border p-5 bg-white"><p class="opacity-90">“Clear communication from day one. The new deck transformed our outdoor area — top workmanship.”</p><footer class="mt-3 text-sm font-semibold">Client, Richmond</footer></blockquote>
+      <blockquote class="rounded-xl border p-5 bg-white"><p class="opacity-90">“The shed is exactly what we needed — solid, practical, and well-finished. Highly recommend.”</p><footer class="mt-3 text-sm font-semibold">Property owner, Tasman</footer></blockquote>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="py-14" aria-labelledby="faq-heading">
+    <h2 id="faq-heading" class="text-3xl md:text-4xl font-bold mb-6" data-aos="fade-up">Frequently asked questions</h2>
+    <div class="grid gap-4 md:grid-cols-2" data-aos="fade-up" data-aos-delay="100">
+      <div class="collapse collapse-arrow border bg-white">
+        <input type="checkbox" />
+        <div class="collapse-title text-base font-semibold">Do you handle council consents?</div>
+        <div class="collapse-content opacity-90 text-sm">Yes. We coordinate designers and engineers, prepare documentation, and manage council submissions to keep things moving.</div>
+      </div>
+      <div class="collapse collapse-arrow border bg-white">
+        <input type="checkbox" />
+        <div class="collapse-title text-base font-semibold">Can you work to a budget?</div>
+        <div class="collapse-content opacity-90 text-sm">Absolutely. We provide scoped pricing, flag cost drivers early, and suggest alternatives that protect the end result.</div>
+      </div>
+      <div class="collapse collapse-arrow border bg-white">
+        <input type="checkbox" />
+        <div class="collapse-title text-base font-semibold">What areas do you service?</div>
+        <div class="collapse-content opacity-90 text-sm">Nelson, Tasman, Richmond, Motueka, Mapua, and surrounding areas.</div>
+      </div>
+      <div class="collapse collapse-arrow border bg-white">
+        <input type="checkbox" />
+        <div class="collapse-title text-base font-semibold">Are you a licensed building practitioner?</div>
+        <div class="collapse-content opacity-90 text-sm">Yes — qualified, compliant, and focused on safe, tidy sites and quality outcomes.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA band -->
+  <section class="relative overflow-hidden rounded-xl" aria-label="Call to action" data-aos="fade-in">
+    <img src="/images/IMG_0611.png" alt="Outdoor living space" class="w-full h-64 md:h-72 object-cover" loading="lazy" />
+    <div class="absolute inset-0 bg-black/60"></div>
+    <div class="absolute inset-0 flex items-center">
+      <div class="max-w-5xl mx-auto px-4 text-white">
+        <h2 class="text-2xl md:text-3xl font-bold">Ready to build? Let’s talk.</h2>
+        <p class="mt-2 opacity-90">Tell us about your site, budget, and timeline — we’ll come back with practical next steps.</p>
+        <div class="mt-4">
+          <a href="/contact" class="btn btn-primary">Request a quote</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Secondary CTA cards -->
+  <section class="py-12" aria-label="Explore more">
+    <div class="grid gap-6 md:grid-cols-3" data-aos="fade-up">
+      <a href="/gallery" class="rounded-xl border p-6 hover:shadow-md transition-shadow bg-white">
+        <h3 class="font-semibold">See our gallery</h3>
+        <p class="mt-1 text-sm opacity-80">Get inspired by recent builds across Nelson Tasman.</p>
+      </a>
+      <a href="/about" class="rounded-xl border p-6 hover:shadow-md transition-shadow bg-white">
+        <h3 class="font-semibold">About Southside</h3>
+        <p class="mt-1 text-sm opacity-80">Local team, straight talk, and quality workmanship.</p>
+      </a>
+      <a href="/contact" class="rounded-xl border p-6 hover:shadow-md transition-shadow bg-white">
+        <h3 class="font-semibold">Get in touch</h3>
+        <p class="mt-1 text-sm opacity-80">Book a site visit or request a detailed quote.</p>
+      </a>
+    </div>
+  </section>
+</BaseLayout>
