@@ -5,7 +5,7 @@ import { cfImage, cfSrcSet } from '../utils/images';
 <BaseLayout title="About">
   <!-- Hero -->
   <section class="relative overflow-hidden rounded-xl" aria-label="About Southside Construction" data-aos="fade-in">
-  <img src={cfImage('/images/IMG_1203.png', { width: 1600, quality: 78 })} srcset={cfSrcSet('/images/IMG_1203.png', [640, 960, 1280, 1600, 2000], { quality: 78 })} sizes="100vw" alt="Southside Construction project in Nelson Tasman" class="w-full h-[45vh] min-h-[320px] object-cover hero-img" loading="eager" decoding="async" />
+  <img src={cfImage('/images/IMG_1203.png', { width: 1600, quality: 78 })} srcset={cfSrcSet('/images/IMG_1203.png', [640, 960, 1280, 1600, 2000], { quality: 78 })} sizes="100vw" alt="Southside Construction project in Nelson Tasman" class="w-full h-[45vh] min-h-[320px] object-cover hero-img" loading="eager" decoding="async" fetchpriority="high" />
     <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-black/20"></div>
     <div class="absolute inset-0 flex items-end">
       <div class="max-w-5xl mx-auto px-4 pb-8 text-white">
