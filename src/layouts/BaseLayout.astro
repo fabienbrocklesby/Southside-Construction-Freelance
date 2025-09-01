@@ -27,6 +27,53 @@ const { title } = Astro.props;
           if (window.AOS) {
             window.AOS.init();
           }
+          // Dev-only: rewrite Cloudflare /cdn-cgi/image URLs to local /images paths
+          (function devRewriteCF(){
+            try {
+              const isLocal = /^(localhost|127\.0\.0\.1)$/i.test(location.hostname);
+              if (!isLocal) return;
+              const stripCF = (url) => {
+                if (!url) return url;
+                try {
+                  // handle relative or absolute
+                  const u = url.startsWith('http') ? new URL(url, location.origin).pathname : url;
+                  const marker = '/cdn-cgi/image/';
+                  const idx = u.indexOf(marker);
+                  if (idx === -1) return url;
+                  // get portion after /cdn-cgi/image/<params>/
+                  const rest = u.slice(idx + marker.length);
+                  const slash = rest.indexOf('/');
+                  if (slash === -1) return url;
+                  const path = rest.slice(slash + 1); // after params/
+                  return '/' + path.replace(/^\/*/, '');
+                } catch { return url; }
+              };
+              const rewriteSet = (val) => {
+                if (!val) return val;
+                return val.split(',').map(part => {
+                  const segs = part.trim().split(/\s+/);
+                  if (!segs.length) return part;
+                  segs[0] = stripCF(segs[0]);
+                  return segs.join(' ');
+                }).join(', ');
+              };
+              const imgs = Array.from(document.querySelectorAll('img'));
+              imgs.forEach(img => {
+                const src = img.getAttribute('src');
+                const srcset = img.getAttribute('srcset');
+                const dsrc = img.getAttribute('data-src');
+                const dsrcset = img.getAttribute('data-srcset');
+                const nsrc = stripCF(src);
+                const ndsrc = stripCF(dsrc);
+                const nset = rewriteSet(srcset);
+                const ndset = rewriteSet(dsrcset);
+                if (nsrc !== src) img.setAttribute('src', nsrc);
+                if (ndsrc !== dsrc && dsrc) img.setAttribute('data-src', ndsrc);
+                if (nset !== srcset && srcset) img.setAttribute('srcset', nset);
+                if (ndset !== dsrcset && dsrcset) img.setAttribute('data-srcset', ndset);
+              });
+            } catch { /* noop */ }
+          })();
           // Lightweight, global lazy loader to avoid flooding network with large PNGs
           (function lazyLoader(){
             const PLACEHOLDER = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==';

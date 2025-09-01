@@ -24,19 +24,13 @@ function stripLeadingSlash(p: string) {
 export function cfImage(path: string, opts: CFOpts = {}) {
   const p = stripLeadingSlash(path);
   const params = buildParams(opts);
-  // In local dev, Cloudflare's /cdn-cgi/image endpoint isn't available.
-  // Fall back to the original asset path so images render during `astro dev`.
-  if (import.meta.env.DEV) {
-    return `/${p}`;
-  }
-  return `/cdn-cgi/image/${params}/${p}`;
+  const isProd = typeof process !== 'undefined' && (process as any)?.env?.NODE_ENV === 'production';
+  return isProd ? `/cdn-cgi/image/${params}/${p}` : `/${p}`;
 }
 
 export function cfSrcSet(path: string, widths: number[], opts: Omit<CFOpts, 'width'> = {}) {
-  // In dev, return an empty srcset so the browser uses `src` directly.
-  if (import.meta.env.DEV) {
-    return '';
-  }
+  const isProd = typeof process !== 'undefined' && (process as any)?.env?.NODE_ENV === 'production';
+  if (!isProd) return '';
   return widths
     .map((w) => `${cfImage(path, { ...opts, width: w })} ${w}w`)
     .join(', ');
