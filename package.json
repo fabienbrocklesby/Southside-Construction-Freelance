@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "astro preview"
+  "preview": "astro preview",
+  "images:compress": "mkdir -p public/.optimized/images public/.optimized/logos && imagemin 'public/images/*.{png,PNG}' --plugin=pngquant --out-dir='public/.optimized/images' && imagemin 'public/images/*.{jpg,jpeg,JPG,JPEG}' --plugin=mozjpeg --out-dir='public/.optimized/images' && imagemin 'public/logos/*.{png,PNG}' --plugin=pngquant --out-dir='public/.optimized/logos' && rsync -a public/.optimized/images/ public/images/ && rsync -a public/.optimized/logos/ public/logos/ && rm -rf public/.optimized"
   },
   "dependencies": {
     "@astrojs/tailwind": "^5.0.0",
