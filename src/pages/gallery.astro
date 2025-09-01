@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { cfImage, cfSrcSet } from '../utils/images';
 const imageFiles = [
   'Image1.png',
   'IMG_0045.png','IMG_0051.png','IMG_0323.png','IMG_0415.png','IMG_0557.png','IMG_0558.png','IMG_0559.png','IMG_0609.png','IMG_0611.png','IMG_0716.png','IMG_0832.png','IMG_0861.png','IMG_0871.png','IMG_0872.png','IMG_0873.png','IMG_0874.png','IMG_0875.png','IMG_0876.png','IMG_0919.png','IMG_0920.png','IMG_0946.png','IMG_0947.png','IMG_1061.png','IMG_1063.png','IMG_1064.png','IMG_1074.png','IMG_1075.png','IMG_1103.png','IMG_1104.png','IMG_1105.png','IMG_1200.png','IMG_1202.png','IMG_1203.png','IMG_1204.png','IMG_2538.png','IMG_2541.png','IMG_2611.png','IMG_2612.png','IMG_2614.png','IMG_2615.png','IMG_4306.png','IMG_4307.png','IMG_4902.png','IMG_5019.png','IMG_5022.png','IMG_5660.png','IMG_6336.png','IMG_6337.png','IMG_6383.png','IMG_6384.png','IMG_6385.png','IMG_6389.png','IMG_7832.png','IMG_7833.png','IMG_8013.png','IMG_8598.png','IMG_9427.png','IMG_9428.png','IMG_9432.png','IMG_9442.png','IMG_9484.png','IMG_9485.png','IMG_9520.png','IMG_9521.png','IMG_9535.png',
@@ -35,7 +36,7 @@ const images = imageFiles.map((f) => ({ src: `/images/${f}`, alt: 'Southside Con
 
   <!-- CTA -->
   <section class="mt-10 relative overflow-hidden rounded-xl" aria-label="Call to action" data-aos="fade-in">
-  <img data-src="/images/IMG_0611.png" alt="Outdoor living space" class="w-full h-56 md:h-72 object-cover" />
+  <img data-src={cfImage('/images/IMG_0611.png', { width: 1600, quality: 78 })} data-srcset={cfSrcSet('/images/IMG_0611.png', [640, 960, 1280, 1600], { quality: 78 })} sizes="100vw" alt="Outdoor living space" class="w-full h-56 md:h-72 object-cover" />
     <div class="absolute inset-0 bg-black/60"></div>
     <div class="absolute inset-0 flex items-center">
       <div class="max-w-5xl mx-auto px-4 text-white">
