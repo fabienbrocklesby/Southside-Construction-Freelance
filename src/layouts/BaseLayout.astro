@@ -27,36 +27,32 @@ const { title } = Astro.props;
           if (window.AOS) {
             window.AOS.init();
           }
-          // Dev-only: rewrite Cloudflare /cdn-cgi/image URLs to local /images paths
-          (function devRewriteCF(){
-            try {
-              const isLocal = /^(localhost|127\.0\.0\.1)$/i.test(location.hostname);
-              if (!isLocal) return;
-              const stripCF = (url) => {
-                if (!url) return url;
-                try {
-                  // handle relative or absolute
-                  const u = url.startsWith('http') ? new URL(url, location.origin).pathname : url;
-                  const marker = '/cdn-cgi/image/';
-                  const idx = u.indexOf(marker);
-                  if (idx === -1) return url;
-                  // get portion after /cdn-cgi/image/<params>/
-                  const rest = u.slice(idx + marker.length);
-                  const slash = rest.indexOf('/');
-                  if (slash === -1) return url;
-                  const path = rest.slice(slash + 1); // after params/
-                  return '/' + path.replace(/^\/*/, '');
-                } catch { return url; }
-              };
-              const rewriteSet = (val) => {
-                if (!val) return val;
-                return val.split(',').map(part => {
-                  const segs = part.trim().split(/\s+/);
-                  if (!segs.length) return part;
-                  segs[0] = stripCF(segs[0]);
-                  return segs.join(' ');
-                }).join(', ');
-              };
+          // Detect Cloudflare Image Resizing support; if missing (e.g., some Pages setups), rewrite to raw /images paths
+          (function cfRewriteIfUnsupported(){
+            const marker = '/cdn-cgi/image/';
+            const stripCF = (url) => {
+              if (!url) return url;
+              try {
+                const u = url.startsWith('http') ? new URL(url, location.origin).pathname : url;
+                const idx = u.indexOf(marker);
+                if (idx === -1) return url;
+                const rest = u.slice(idx + marker.length);
+                const slash = rest.indexOf('/');
+                if (slash === -1) return url;
+                const path = rest.slice(slash + 1);
+                return '/' + path.replace(/^\/*/, '');
+              } catch { return url; }
+            };
+            const rewriteSet = (val) => {
+              if (!val) return val;
+              return val.split(',').map(part => {
+                const segs = part.trim().split(/\s+/);
+                if (!segs.length) return part;
+                segs[0] = stripCF(segs[0]);
+                return segs.join(' ');
+              }).join(', ');
+            };
+            const rewriteAll = () => {
               const imgs = Array.from(document.querySelectorAll('img'));
               imgs.forEach(img => {
                 const src = img.getAttribute('src');
@@ -72,7 +68,16 @@ const { title } = Astro.props;
                 if (nset !== srcset && srcset) img.setAttribute('srcset', nset);
                 if (ndset !== dsrcset && dsrcset) img.setAttribute('data-srcset', ndset);
               });
-            } catch { /* noop */ }
+            };
+            try {
+              const testUrl = `${marker}width=10,quality=10/logo.svg`;
+              let settled = false;
+              const t = new Image();
+              const timeout = setTimeout(() => { if (!settled) { settled = true; rewriteAll(); } }, 1600);
+              t.onload = () => { settled = true; clearTimeout(timeout); /* supported, do nothing */ };
+              t.onerror = () => { if (!settled) { settled = true; clearTimeout(timeout); rewriteAll(); } };
+              t.src = testUrl;
+            } catch { /* if anything goes wrong, rewrite to be safe */ rewriteAll(); }
           })();
           // Lightweight, global lazy loader to avoid flooding network with large PNGs
           (function lazyLoader(){
