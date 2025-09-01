@@ -27,6 +27,53 @@ const { title } = Astro.props;
           if (window.AOS) {
             window.AOS.init();
           }
+          // Lightweight, global lazy loader to avoid flooding network with large PNGs
+          (function lazyLoader(){
+            const PLACEHOLDER = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==';
+            const imgs = Array.from(document.querySelectorAll('img'));
+            // Ensure non-hero images default to lazy+async
+            imgs.forEach(img => {
+              if (!img.classList.contains('hero-img')) {
+                if (!img.hasAttribute('loading')) img.setAttribute('loading', 'lazy');
+                if (!img.hasAttribute('decoding')) img.setAttribute('decoding', 'async');
+              }
+            });
+
+            const targets = Array.from(document.querySelectorAll('img[data-src]'));
+            let inflight = 0;
+            const MAX_CONCURRENCY = 4;
+            const queue = [];
+            function enqueue(el){
+              queue.push(el);
+              processQueue();
+            }
+            function processQueue(){
+              while (inflight < MAX_CONCURRENCY && queue.length){
+                const el = queue.shift();
+                if (el.__loaded) continue;
+                inflight++;
+                const src = el.getAttribute('data-src');
+                const srcset = el.getAttribute('data-srcset');
+                if (src) el.src = src;
+                if (srcset) el.srcset = srcset;
+                el.addEventListener('load', () => { inflight--; el.__loaded = true; el.removeAttribute('data-src'); el.removeAttribute('data-srcset'); processQueue(); }, { once: true });
+                el.addEventListener('error', () => { inflight--; processQueue(); }, { once: true });
+              }
+            }
+            const io = new IntersectionObserver((entries) => {
+              entries.forEach(({ isIntersecting, target }) => {
+                if (isIntersecting) {
+                  io.unobserve(target);
+                  enqueue(target);
+                }
+              });
+            }, { rootMargin: '200px 0px' });
+            targets.forEach(el => {
+              if (!el.getAttribute('src')) el.setAttribute('src', PLACEHOLDER);
+              io.observe(el);
+            });
+          })();
+        
         });
       </script>
     </body>
