@@ -22,16 +22,12 @@ function stripLeadingSlash(p: string) {
 }
 
 export function cfImage(path: string, opts: CFOpts = {}) {
+  // Hotfix: always return raw path so images work without CDN or JS.
   const p = stripLeadingSlash(path);
-  const params = buildParams(opts);
-  const isProd = typeof process !== 'undefined' && (process as any)?.env?.NODE_ENV === 'production';
-  return isProd ? `/cdn-cgi/image/${params}/${p}` : `/${p}`;
+  return `/${p}`;
 }
 
 export function cfSrcSet(path: string, widths: number[], opts: Omit<CFOpts, 'width'> = {}) {
-  const isProd = typeof process !== 'undefined' && (process as any)?.env?.NODE_ENV === 'production';
-  if (!isProd) return '';
-  return widths
-    .map((w) => `${cfImage(path, { ...opts, width: w })} ${w}w`)
-    .join(', ');
+  // Hotfix: no srcset to keep things simple and robust across environments.
+  return '';
 }
