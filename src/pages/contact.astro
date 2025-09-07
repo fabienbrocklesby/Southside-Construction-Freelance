@@ -1,38 +1,78 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import { cfImage, cfSrcSet } from '../utils/images';
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { cfImage, cfSrcSet } from "../utils/images";
 ---
+
 <BaseLayout title="Contact">
   <!-- Hero -->
-  <section class="relative overflow-hidden rounded-xl" aria-label="Contact Southside Construction" data-aos="fade-in">
-  <img src={cfImage('/images/IMG_0611.png', { width: 1600, quality: 78 })} srcset={cfSrcSet('/images/IMG_0611.png', [640, 960, 1280, 1600], { quality: 78 })} sizes="100vw" alt="Outdoor deck area" class="w-full h-56 md:h-72 object-cover hero-img" loading="eager" decoding="async" fetchpriority="high" />
+  <section
+    class="relative overflow-hidden rounded-xl"
+    aria-label="Contact Southside Construction"
+    data-aos="fade-in"
+  >
+    <img
+      src={cfImage("/images/IMG_0611.png", { width: 1600, quality: 78 })}
+      srcset={cfSrcSet("/images/IMG_0611.png", [640, 960, 1280, 1600], {
+        quality: 78,
+      })}
+      sizes="100vw"
+      alt="Outdoor deck area"
+      class="w-full h-56 md:h-72 object-cover hero-img"
+      loading="eager"
+      decoding="async"
+      fetchpriority="high"
+    />
     <div class="absolute inset-0 bg-black/60"></div>
     <div class="absolute inset-0 flex items-center">
       <div class="max-w-5xl mx-auto px-4 text-white">
-        <h1 class="text-3xl md:text-4xl font-bold">Let’s talk about your project</h1>
-        <p class="mt-2 opacity-90">New build, renovation, shed, or outdoor — tell us what you’re planning and we’ll get back with next steps.</p>
+        <h1 class="text-3xl md:text-4xl font-bold">
+          Let’s talk about your project
+        </h1>
+        <p class="mt-2 opacity-90">
+          New build, renovation, shed, or outdoor — tell us what you’re planning
+          and we’ll get back with next steps.
+        </p>
       </div>
     </div>
   </section>
 
   <!-- Contact details -->
   <section class="py-10" aria-labelledby="contact-details">
-    <h2 id="contact-details" class="text-2xl md:text-3xl font-bold mb-6" data-aos="fade-up">How to reach us</h2>
-    <div class="grid gap-6 md:grid-cols-3" data-aos="fade-up" data-aos-delay="100">
+    <h2
+      id="contact-details"
+      class="text-2xl md:text-3xl font-bold mb-6"
+      data-aos="fade-up"
+    >
+      How to reach us
+    </h2>
+    <div
+      class="grid gap-6 md:grid-cols-3"
+      data-aos="fade-up"
+      data-aos-delay="100"
+    >
       <div class="rounded-xl border p-5 bg-white">
         <h3 class="font-semibold">Contact</h3>
-        <ul class="mt-2 space-y-1 text-sm">
+        <p class="mt-1 text-sm opacity-80">Charlie Spilman</p>
+        <ul class="mt-1 space-y-1 text-sm">
           <li><a class="link" href="tel:+64221519480">+64 22 151 9480</a></li>
-          <li><a class="link" href="mailto:hello@southsideconstruction.co.nz">hello@southsideconstruction.co.nz</a></li>
+          <li>
+            <a class="link" href="mailto:hello@southsideconstruction.co.nz"
+              >hello@southsideconstruction.co.nz</a
+            >
+          </li>
         </ul>
       </div>
       <div class="rounded-xl border p-5 bg-white">
         <h3 class="font-semibold">Areas</h3>
-        <p class="mt-2 text-sm opacity-80">Nelson, Tasman, Richmond, Motueka, Mapua, and surrounding areas.</p>
+        <p class="mt-2 text-sm opacity-80">
+          Nelson, Tasman, Richmond, Motueka, Mapua, and surrounding areas.
+        </p>
       </div>
       <div class="rounded-xl border p-5 bg-white">
         <h3 class="font-semibold">Hours</h3>
-        <p class="mt-2 text-sm opacity-80">Mon–Fri 7:30am–5:30pm. Site visits by appointment.</p>
+        <p class="mt-2 text-sm opacity-80">
+          Mon–Fri 7:30am–5:30pm. Hours are flexible. Site visits by appointment.
+        </p>
       </div>
     </div>
   </section>
@@ -42,16 +82,51 @@ import { cfImage, cfSrcSet } from '../utils/images';
     <!-- Form -->
     <div class="rounded-xl border bg-white p-5 md:p-6" data-aos="fade-right">
       <h2 class="text-xl font-semibold">Send us a message</h2>
-      <p class="text-sm opacity-80 mt-1">Fill in a few details and we’ll be in touch.</p>
-      <div id="form-status" class="mt-4 hidden alert" role="status" aria-live="polite"></div>
-      <form id="contact-form" method="POST" action="/contact" class="mt-4 grid gap-4">
+      <p class="text-sm opacity-80 mt-1">
+        Fill in a few details and we’ll be in touch.
+      </p>
+      <div
+        id="form-status"
+        class="mt-4 hidden alert"
+        role="status"
+        aria-live="polite"
+      >
+      </div>
+      <form
+        id="contact-form"
+        method="POST"
+        action="/contact"
+        class="mt-4 grid gap-4"
+      >
         <div class="grid gap-4 sm:grid-cols-2">
-          <input type="text" name="name" placeholder="Full name" class="input input-bordered w-full" required />
-          <input type="email" name="email" placeholder="Email" class="input input-bordered w-full" required />
+          <input
+            type="text"
+            name="name"
+            placeholder="Full name"
+            class="input input-bordered w-full"
+            required
+          />
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            class="input input-bordered w-full"
+            required
+          />
         </div>
         <div class="grid gap-4 sm:grid-cols-2">
-          <input type="tel" name="phone" placeholder="Phone (optional)" class="input input-bordered w-full" />
-          <input type="text" name="location" placeholder="Location / suburb" class="input input-bordered w-full" />
+          <input
+            type="tel"
+            name="phone"
+            placeholder="Phone (optional)"
+            class="input input-bordered w-full"
+          />
+          <input
+            type="text"
+            name="location"
+            placeholder="Location / suburb"
+            class="input input-bordered w-full"
+          />
         </div>
         <div class="grid gap-4 sm:grid-cols-2">
           <select name="service" class="select select-bordered w-full">
@@ -70,7 +145,11 @@ import { cfImage, cfSrcSet } from '../utils/images';
             <option>6+ months</option>
           </select>
         </div>
-        <textarea name="message" placeholder="Tell us about your project" class="textarea textarea-bordered w-full min-h-32" required></textarea>
+        <textarea
+          name="message"
+          placeholder="Tell us about your project"
+          class="textarea textarea-bordered w-full min-h-32"
+          required></textarea>
         <button type="submit" class="btn btn-primary">Send message</button>
       </form>
     </div>
@@ -78,53 +157,77 @@ import { cfImage, cfSrcSet } from '../utils/images';
     <!-- Map / Image -->
     <div class="space-y-4" data-aos="fade-left">
       <div class="rounded-xl overflow-hidden border">
-        <iframe title="Nelson & Tasman Map" aria-label="Nelson and Tasman region map"
+        <iframe
+          title="Nelson & Tasman Map"
+          aria-label="Nelson and Tasman region map"
           src="https://maps.google.com/maps?q=Nelson%20Tasman%2C%20New%20Zealand&t=&z=9&ie=UTF8&iwloc=&output=embed"
-          class="w-full h-72 md:h-[420px]" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          class="w-full h-72 md:h-[420px]"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"></iframe>
       </div>
-  <img src="/thumbs/960/IMG_5660.png" srcset="/thumbs/480/IMG_5660.png 480w, /thumbs/720/IMG_5660.png 720w, /thumbs/960/IMG_5660.png 960w" sizes="(min-width: 768px) 24rem, 20rem" alt="Site and tools" class="rounded-xl w-full h-48 object-cover" loading="lazy" width="960" height="720" />
+      <img
+        src="/thumbs/960/IMG_5660.png"
+        srcset="/thumbs/480/IMG_5660.png 480w, /thumbs/720/IMG_5660.png 720w, /thumbs/960/IMG_5660.png 960w"
+        sizes="(min-width: 768px) 24rem, 20rem"
+        alt="Site and tools"
+        class="rounded-xl w-full h-48 object-cover"
+        loading="lazy"
+        width="960"
+        height="720"
+      />
     </div>
   </section>
 
   <!-- Secondary CTA -->
   <section class="py-10" aria-label="Prefer to call?" data-aos="fade-up">
-    <div class="rounded-xl border bg-white p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+    <div
+      class="rounded-xl border bg-white p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4"
+    >
       <div>
         <h3 class="text-lg font-semibold">Prefer to call?</h3>
-        <p class="text-sm opacity-80">We’re happy to chat through your plans and suggest next steps.</p>
+        <p class="text-sm opacity-80">
+          We’re happy to chat through your plans and suggest next steps.
+        </p>
       </div>
-  <div class="flex gap-3 flex-wrap">
+      <div class="flex gap-3 flex-wrap">
         <a href="tel:+64221519480" class="btn btn-outline">Call now</a>
-        <a href="mailto:hello@southsideconstruction.co.nz" class="btn">Email us</a>
+        <a href="mailto:hello@southsideconstruction.co.nz" class="btn"
+          >Email us</a
+        >
       </div>
     </div>
   </section>
 
   <script is:inline>
-    document.addEventListener('DOMContentLoaded', () => {
-      const form = document.getElementById('contact-form');
-      const statusEl = document.getElementById('form-status');
+    document.addEventListener("DOMContentLoaded", () => {
+      const form = document.getElementById("contact-form");
+      const statusEl = document.getElementById("form-status");
 
       function showStatus(kind, text) {
-        statusEl.className = `mt-4 alert ${kind === 'ok' ? 'alert-success' : 'alert-error'}`;
+        statusEl.className = `mt-4 alert ${kind === "ok" ? "alert-success" : "alert-error"}`;
         statusEl.textContent = text;
-        statusEl.classList.remove('hidden');
+        statusEl.classList.remove("hidden");
       }
 
-      form.addEventListener('submit', async (e) => {
+      form.addEventListener("submit", async (e) => {
         e.preventDefault();
         const data = new FormData(form);
         try {
-          const res = await fetch('/contact', { method: 'POST', body: data });
+          const res = await fetch("/contact", { method: "POST", body: data });
           const json = await res.json().catch(() => ({}));
           if (!res.ok || json.success === false) {
-            throw new Error(json?.message || 'Network error');
+            throw new Error(json?.message || "Network error");
           }
-          const msg = json?.message || 'Thanks — your message has been sent. We’ll be in touch soon.';
-          showStatus('ok', msg);
+          const msg =
+            json?.message ||
+            "Thanks — your message has been sent. We’ll be in touch soon.";
+          showStatus("ok", msg);
           form.reset();
         } catch (err) {
-          showStatus('err', 'Sorry, something went wrong. Please try again or call us directly.');
+          showStatus(
+            "err",
+            "Sorry, something went wrong. Please try again or call us directly.",
+          );
         }
       });
     });
