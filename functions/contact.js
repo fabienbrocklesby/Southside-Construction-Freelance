@@ -133,10 +133,27 @@ export async function onRequestPost(context) {
     }
 
     stage = 'env_check';
-    const { ZEPTO_API_KEY, FROM_EMAIL, SOUTHSIDE_EMAIL, RECIPIENT_EMAIL } = env; // FROM_EMAIL will be used as Zepto "from" address
-    const DEST_EMAIL = SOUTHSIDE_EMAIL || RECIPIENT_EMAIL || 'noreply@southsideconstruction.co.nz';
-    if (!ZEPTO_API_KEY || !FROM_EMAIL || !DEST_EMAIL) {
-      const diag = { hasZEPTO_API_KEY: !!ZEPTO_API_KEY, hasFROM_EMAIL: !!FROM_EMAIL, hasDEST_EMAIL: !!DEST_EMAIL };
+    const {
+      ZEPTO_API_KEY,
+      FROM_EMAIL,
+      SOUTHSIDE_EMAIL,
+      RECIPIENT_EMAIL,
+      ZEPTO_API_BASE_URL,
+    } = env; // FROM_EMAIL will be used as Zepto "from" address
+
+    const apiKey = (ZEPTO_API_KEY || '').trim();
+    const fromEmail = (FROM_EMAIL || '').trim();
+    const destEmailRaw = SOUTHSIDE_EMAIL || RECIPIENT_EMAIL || 'noreply@southsideconstruction.co.nz';
+    const destEmail = destEmailRaw.trim();
+    const zeptoEndpointBase = (ZEPTO_API_BASE_URL || 'https://api.zeptomail.com.au/v1.1/email').trim();
+    const zeptoEndpoint = zeptoEndpointBase.replace(/\/$/, '');
+
+    if (!apiKey || !fromEmail || !destEmail) {
+      const diag = {
+        hasZEPTO_API_KEY: !!apiKey,
+        hasFROM_EMAIL: !!fromEmail,
+        hasDEST_EMAIL: !!destEmail,
+      };
       console.error('Config error - missing env', diag);
       return respond(500, { success: false, code: 'SERVER_MISCONFIGURED', message: 'Email service not configured.', diagnostics: diag });
     }
@@ -154,8 +171,8 @@ export async function onRequestPost(context) {
     stage = 'prepare_payloads';
     // ZeptoMail payloads
     const adminEmailData = {
-      from: { address: FROM_EMAIL, name: 'Southside Construction Website' },
-      to: [{ email_address: { address: DEST_EMAIL, name: 'Southside Construction' } }],
+      from: { address: fromEmail, name: 'Southside Construction Website' },
+      to: [{ email_address: { address: destEmail, name: 'Southside Construction' } }],
       reply_to: [{ address: email }],
       subject: `New Enquiry: ${fullName}${service && service !== 'Not specified' ? ' — ' + service : ''}`.slice(0, 120),
       htmlbody: `
@@ -175,7 +192,7 @@ export async function onRequestPost(context) {
     };
 
     const customerEmailData = {
-      from: { address: FROM_EMAIL, name: 'Southside Construction' },
+      from: { address: fromEmail, name: 'Southside Construction' },
       to: [{ email_address: { address: email, name: `${fullName}` } }],
       subject: 'Thanks for contacting Southside Construction',
       htmlbody: `
@@ -190,16 +207,26 @@ export async function onRequestPost(context) {
         </div>`
     };
 
+    function sanitizePayload(payload) {
+      if (!payload.reply_to || !payload.reply_to.length) return payload;
+      const cleaned = payload.reply_to.filter((entry) => entry && entry.address);
+      if (!cleaned.length) {
+        const { reply_to, ...rest } = payload;
+        return rest;
+      }
+      return { ...payload, reply_to: cleaned };
+    }
+
     async function sendEmail(payload, label) {
       try {
-        const resp = await fetch('https://api.zeptomail.com.au/v1.1/email', {
+        const resp = await fetch(zeptoEndpoint, {
           method: 'POST',
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
-            'Authorization': `Zoho-enczapikey ${ZEPTO_API_KEY}`
+            'Authorization': `Zoho-enczapikey ${apiKey}`
           },
-          body: JSON.stringify(payload)
+          body: JSON.stringify(sanitizePayload(payload))
         });
         if (!resp.ok) {
           const text = await resp.text();
