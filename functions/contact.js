@@ -20,6 +20,8 @@ function getAllowedOrigins(env) {
   const defaults = [
     'https://southsideconstruction.nz',
     'https://www.southsideconstruction.nz',
+    'https://southsideconstruction.co.nz',
+    'https://www.southsideconstruction.co.nz',
   ];
   const list = envList.length ? envList : defaults;
   const fullSet = new Set(list.map((s) => s.replace(/\/$/, '')));
@@ -39,7 +41,7 @@ function isOriginAllowed(origin, allowed) {
   try {
     const host = new URL(origin).host.toLowerCase();
     if (allowed.hostSet.has(host)) return true;
-  } catch (_) {}
+  } catch (_) { }
   return false;
 }
 
@@ -65,7 +67,7 @@ export async function onRequestPost(context) {
   const originAllowed = isOriginAllowed(origin, allowed);
   const corsHeaders = buildCorsHeaders(origin, allowed);
 
-  const respond = (status, payload, extraHeaders={}) => new Response(JSON.stringify(payload), {
+  const respond = (status, payload, extraHeaders = {}) => new Response(JSON.stringify(payload), {
     status,
     headers: { 'Content-Type': 'application/json', ...corsHeaders, ...extraHeaders }
   });
@@ -82,7 +84,7 @@ export async function onRequestPost(context) {
 
     let formData;
     try {
-  stage = 'parse_form';
+      stage = 'parse_form';
       formData = await request.formData();
     } catch (e) {
       return respond(400, { success: false, code: 'BAD_FORM_DATA', message: 'Invalid form submission.' });
@@ -94,13 +96,13 @@ export async function onRequestPost(context) {
     };
 
     // Southside form fields
-    const fullName  = raw('name');
-    const email     = raw('email');
-    const phone     = raw('phone') || 'Not provided';
-    const location  = raw('location') || 'Not provided';
-    const service   = raw('service') || 'Not specified';
-    const timeline  = raw('timeline') || 'Not specified';
-    const message   = raw('message');
+    const fullName = raw('name');
+    const email = raw('email');
+    const phone = raw('phone') || 'Not provided';
+    const location = raw('location') || 'Not provided';
+    const service = raw('service') || 'Not specified';
+    const timeline = raw('timeline') || 'Not specified';
+    const message = raw('message');
 
     // Derive first/last for email niceties
     let firstName = fullName;
@@ -112,8 +114,8 @@ export async function onRequestPost(context) {
     }
 
     // Validation rules
-  stage = 'validate_basic';
-  if (!fullName || !email || !message) {
+    stage = 'validate_basic';
+    if (!fullName || !email || !message) {
       return respond(400, { success: false, code: 'MISSING_FIELDS', message: 'Please fill in all required fields.' });
     }
     if (fullName.length > 120) {
@@ -130,9 +132,9 @@ export async function onRequestPost(context) {
       return respond(400, { success: false, code: 'INVALID_EMAIL', message: 'Please enter a valid email address.' });
     }
 
-  stage = 'env_check';
-  const { ZEPTO_API_KEY, FROM_EMAIL, SOUTHSIDE_EMAIL, RECIPIENT_EMAIL } = env; // FROM_EMAIL will be used as Zepto "from" address
-    const DEST_EMAIL = SOUTHSIDE_EMAIL || RECIPIENT_EMAIL || 'southside@fabienbrocklesby.com';
+    stage = 'env_check';
+    const { ZEPTO_API_KEY, FROM_EMAIL, SOUTHSIDE_EMAIL, RECIPIENT_EMAIL } = env; // FROM_EMAIL will be used as Zepto "from" address
+    const DEST_EMAIL = SOUTHSIDE_EMAIL || RECIPIENT_EMAIL || 'noreply@southsideconstruction.co.nz';
     if (!ZEPTO_API_KEY || !FROM_EMAIL || !DEST_EMAIL) {
       const diag = { hasZEPTO_API_KEY: !!ZEPTO_API_KEY, hasFROM_EMAIL: !!FROM_EMAIL, hasDEST_EMAIL: !!DEST_EMAIL };
       console.error('Config error - missing env', diag);
@@ -149,13 +151,13 @@ export async function onRequestPost(context) {
 
     const safeMessage = esc(message).replace(/\n/g, '<br>');
 
-  stage = 'prepare_payloads';
-  // ZeptoMail payloads
-  const adminEmailData = {
-    from: { address: FROM_EMAIL, name: 'Southside Construction Website' },
-    to: [ { email_address: { address: DEST_EMAIL, name: 'Southside Construction' } } ],
-      reply_to: [ { address: email } ],
-    subject: `New Enquiry: ${fullName}${service && service !== 'Not specified' ? ' — ' + service : ''}`.slice(0, 120),
+    stage = 'prepare_payloads';
+    // ZeptoMail payloads
+    const adminEmailData = {
+      from: { address: FROM_EMAIL, name: 'Southside Construction Website' },
+      to: [{ email_address: { address: DEST_EMAIL, name: 'Southside Construction' } }],
+      reply_to: [{ address: email }],
+      subject: `New Enquiry: ${fullName}${service && service !== 'Not specified' ? ' — ' + service : ''}`.slice(0, 120),
       htmlbody: `
         <div style="font-family: Arial, sans-serif; max-width:600px; margin:0 auto; padding:20px;">
       <h2 style="color:#111111; margin-top:0;">New Website Enquiry</h2>
@@ -170,12 +172,12 @@ export async function onRequestPost(context) {
           <hr style="margin:24px 0; border:none; border-top:1px solid #e5e7eb;" />
       <p style="font-size:12px; color:#6b7280;">Sent automatically from the Southside Construction website.</p>
         </div>`
-  };
+    };
 
-  const customerEmailData = {
-    from: { address: FROM_EMAIL, name: 'Southside Construction' },
-    to: [ { email_address: { address: email, name: `${fullName}` } } ],
-    subject: 'Thanks for contacting Southside Construction',
+    const customerEmailData = {
+      from: { address: FROM_EMAIL, name: 'Southside Construction' },
+      to: [{ email_address: { address: email, name: `${fullName}` } }],
+      subject: 'Thanks for contacting Southside Construction',
       htmlbody: `
         <div style="font-family: Arial, sans-serif; max-width:600px; margin:0 auto; padding:20px;">
       <h2 style="color:#111111; margin-top:0;">Thanks — we’ve got your message</h2>
@@ -186,7 +188,7 @@ export async function onRequestPost(context) {
           <hr style="margin:24px 0; border:none; border-top:1px solid #e5e7eb;" />
           <p style="font-size:12px; color:#6b7280;">If you did not submit this request, you can ignore this email.</p>
         </div>`
-  };
+    };
 
     async function sendEmail(payload, label) {
       try {
@@ -201,8 +203,8 @@ export async function onRequestPost(context) {
         });
         if (!resp.ok) {
           const text = await resp.text();
-          let parsed; try { parsed = JSON.parse(text); } catch(_) {}
-          const errMsg = parsed?.message || parsed?.error || text.slice(0,400);
+          let parsed; try { parsed = JSON.parse(text); } catch (_) { }
+          const errMsg = parsed?.message || parsed?.error || text.slice(0, 400);
           console.error(`ZeptoMail ${label} email failed`, resp.status, errMsg);
           return { ok: false, status: resp.status, errorMessage: errMsg };
         }
@@ -213,7 +215,7 @@ export async function onRequestPost(context) {
       }
     }
 
-    function classifyProviderFailure(status, msg='') {
+    function classifyProviderFailure(status, msg = '') {
       if (status === 401) return { hint: 'Invalid ZeptoMail API key or key not authorized.', category: 'auth' };
       if (status === 403) return { hint: 'Forbidden – check domain / sender verification in ZeptoMail.', category: 'forbidden' };
       if (status === 400) return { hint: 'Bad request – verify email addresses and payload shape.', category: 'payload' };
