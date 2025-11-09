@@ -1,132 +1,189 @@
 ---
-import '../styles/global.css';
+import "../styles/global.css";
 import Navbar from "../components/Navbar.astro";
 import Footer from "../components/Footer.astro";
 const { title } = Astro.props;
 ---
-<!DOCTYPE html>
+
+<!doctype html>
 <html lang="en" data-theme="southside">
   <head>
     <meta charset="UTF-8" />
-    <title>{title ? `${title} | Southside Construction` : 'Southside Construction'}</title>
+    <title>
+      {title ? `${title} | Southside Construction` : "Southside Construction"}
+    </title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="/logos/Favicon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
   </head>
-  <body class="min-h-screen flex flex-col bg-base-100 text-base-content overflow-x-hidden">
+  <body
+    class="min-h-screen flex flex-col bg-base-100 text-base-content overflow-x-hidden"
+  >
     <Navbar />
     <main class="flex-grow container mx-auto p-4">
       <slot />
     </main>
     <Footer />
-      <script src="https://unpkg.com/aos@2.3.4/dist/aos.js" defer></script>
-      <script is:inline>
-        document.addEventListener('DOMContentLoaded', () => {
-          if (window.AOS) {
-            window.AOS.init();
-          }
-          // Detect Cloudflare Image Resizing support; if missing (e.g., some Pages setups), rewrite to raw /images paths
-          (function cfRewriteIfUnsupported(){
-            const marker = '/cdn-cgi/image/';
-            const stripCF = (url) => {
-              if (!url) return url;
-              try {
-                const u = url.startsWith('http') ? new URL(url, location.origin).pathname : url;
-                const idx = u.indexOf(marker);
-                if (idx === -1) return url;
-                const rest = u.slice(idx + marker.length);
-                const slash = rest.indexOf('/');
-                if (slash === -1) return url;
-                const path = rest.slice(slash + 1);
-                return '/' + path.replace(/^\/*/, '');
-              } catch { return url; }
-            };
-            const rewriteSet = (val) => {
-              if (!val) return val;
-              return val.split(',').map(part => {
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js" defer></script>
+    <script is:inline>
+      document.addEventListener("DOMContentLoaded", () => {
+        if (window.AOS) {
+          window.AOS.init();
+        }
+        // Detect Cloudflare Image Resizing support; if missing (e.g., some Pages setups), rewrite to raw /images paths
+        (function cfRewriteIfUnsupported() {
+          const marker = "/cdn-cgi/image/";
+          const stripCF = (url) => {
+            if (!url) return url;
+            try {
+              const u = url.startsWith("http")
+                ? new URL(url, location.origin).pathname
+                : url;
+              const idx = u.indexOf(marker);
+              if (idx === -1) return url;
+              const rest = u.slice(idx + marker.length);
+              const slash = rest.indexOf("/");
+              if (slash === -1) return url;
+              const path = rest.slice(slash + 1);
+              return "/" + path.replace(/^\/*/, "");
+            } catch {
+              return url;
+            }
+          };
+          const rewriteSet = (val) => {
+            if (!val) return val;
+            return val
+              .split(",")
+              .map((part) => {
                 const segs = part.trim().split(/\s+/);
                 if (!segs.length) return part;
                 segs[0] = stripCF(segs[0]);
-                return segs.join(' ');
-              }).join(', ');
-            };
-            const rewriteAll = () => {
-              const imgs = Array.from(document.querySelectorAll('img'));
-              imgs.forEach(img => {
-                const src = img.getAttribute('src');
-                const srcset = img.getAttribute('srcset');
-                const dsrc = img.getAttribute('data-src');
-                const dsrcset = img.getAttribute('data-srcset');
-                const nsrc = stripCF(src);
-                const ndsrc = stripCF(dsrc);
-                const nset = rewriteSet(srcset);
-                const ndset = rewriteSet(dsrcset);
-                if (nsrc !== src) img.setAttribute('src', nsrc);
-                if (ndsrc !== dsrc && dsrc) img.setAttribute('data-src', ndsrc);
-                if (nset !== srcset && srcset) img.setAttribute('srcset', nset);
-                if (ndset !== dsrcset && dsrcset) img.setAttribute('data-srcset', ndset);
-              });
-            };
-            try {
-              const testUrl = `${marker}width=10,quality=10/logo.svg`;
-              let settled = false;
-              const t = new Image();
-              const timeout = setTimeout(() => { if (!settled) { settled = true; rewriteAll(); } }, 1600);
-              t.onload = () => { settled = true; clearTimeout(timeout); /* supported, do nothing */ };
-              t.onerror = () => { if (!settled) { settled = true; clearTimeout(timeout); rewriteAll(); } };
-              t.src = testUrl;
-            } catch { /* if anything goes wrong, rewrite to be safe */ rewriteAll(); }
-          })();
-          // Lightweight, global lazy loader to avoid flooding network with large PNGs
-          (function lazyLoader(){
-            const PLACEHOLDER = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==';
-            const imgs = Array.from(document.querySelectorAll('img'));
-            // Ensure non-hero images default to lazy+async
-            imgs.forEach(img => {
-              if (!img.classList.contains('hero-img')) {
-                if (!img.hasAttribute('loading')) img.setAttribute('loading', 'lazy');
-                if (!img.hasAttribute('decoding')) img.setAttribute('decoding', 'async');
-              }
+                return segs.join(" ");
+              })
+              .join(", ");
+          };
+          const rewriteAll = () => {
+            const imgs = Array.from(document.querySelectorAll("img"));
+            imgs.forEach((img) => {
+              const src = img.getAttribute("src");
+              const srcset = img.getAttribute("srcset");
+              const dsrc = img.getAttribute("data-src");
+              const dsrcset = img.getAttribute("data-srcset");
+              const nsrc = stripCF(src);
+              const ndsrc = stripCF(dsrc);
+              const nset = rewriteSet(srcset);
+              const ndset = rewriteSet(dsrcset);
+              if (nsrc !== src) img.setAttribute("src", nsrc);
+              if (ndsrc !== dsrc && dsrc) img.setAttribute("data-src", ndsrc);
+              if (nset !== srcset && srcset) img.setAttribute("srcset", nset);
+              if (ndset !== dsrcset && dsrcset)
+                img.setAttribute("data-srcset", ndset);
             });
-
-            const targets = Array.from(document.querySelectorAll('img[data-src]'));
-            let inflight = 0;
-            const MAX_CONCURRENCY = 4;
-            const queue = [];
-            function enqueue(el){
-              queue.push(el);
-              processQueue();
-            }
-            function processQueue(){
-              while (inflight < MAX_CONCURRENCY && queue.length){
-                const el = queue.shift();
-                if (el.__loaded) continue;
-                inflight++;
-                const src = el.getAttribute('data-src');
-                const srcset = el.getAttribute('data-srcset');
-                if (src) el.src = src;
-                if (srcset) el.srcset = srcset;
-                el.addEventListener('load', () => { inflight--; el.__loaded = true; el.removeAttribute('data-src'); el.removeAttribute('data-srcset'); processQueue(); }, { once: true });
-                el.addEventListener('error', () => { inflight--; processQueue(); }, { once: true });
+          };
+          try {
+            const testUrl = `${marker}width=10,quality=10/logo.svg`;
+            let settled = false;
+            const t = new Image();
+            const timeout = setTimeout(() => {
+              if (!settled) {
+                settled = true;
+                rewriteAll();
               }
+            }, 1600);
+            t.onload = () => {
+              settled = true;
+              clearTimeout(timeout); /* supported, do nothing */
+            };
+            t.onerror = () => {
+              if (!settled) {
+                settled = true;
+                clearTimeout(timeout);
+                rewriteAll();
+              }
+            };
+            t.src = testUrl;
+          } catch {
+            /* if anything goes wrong, rewrite to be safe */ rewriteAll();
+          }
+        })();
+        // Lightweight, global lazy loader to avoid flooding network with large PNGs
+        (function lazyLoader() {
+          const PLACEHOLDER =
+            "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
+          const imgs = Array.from(document.querySelectorAll("img"));
+          // Ensure non-hero images default to lazy+async
+          imgs.forEach((img) => {
+            if (!img.classList.contains("hero-img")) {
+              if (!img.hasAttribute("loading"))
+                img.setAttribute("loading", "lazy");
+              if (!img.hasAttribute("decoding"))
+                img.setAttribute("decoding", "async");
             }
-            const io = new IntersectionObserver((entries) => {
+          });
+
+          const targets = Array.from(
+            document.querySelectorAll("img[data-src]"),
+          );
+          let inflight = 0;
+          const MAX_CONCURRENCY = 4;
+          const queue = [];
+          function enqueue(el) {
+            queue.push(el);
+            processQueue();
+          }
+          function processQueue() {
+            while (inflight < MAX_CONCURRENCY && queue.length) {
+              const el = queue.shift();
+              if (el.__loaded) continue;
+              inflight++;
+              const src = el.getAttribute("data-src");
+              const srcset = el.getAttribute("data-srcset");
+              if (src) el.src = src;
+              if (srcset) el.srcset = srcset;
+              el.addEventListener(
+                "load",
+                () => {
+                  inflight--;
+                  el.__loaded = true;
+                  el.removeAttribute("data-src");
+                  el.removeAttribute("data-srcset");
+                  processQueue();
+                },
+                { once: true },
+              );
+              el.addEventListener(
+                "error",
+                () => {
+                  inflight--;
+                  processQueue();
+                },
+                { once: true },
+              );
+            }
+          }
+          const io = new IntersectionObserver(
+            (entries) => {
               entries.forEach(({ isIntersecting, target }) => {
                 if (isIntersecting) {
                   io.unobserve(target);
                   enqueue(target);
                 }
               });
-            }, { rootMargin: '200px 0px' });
-            targets.forEach(el => {
-              if (!el.getAttribute('src')) el.setAttribute('src', PLACEHOLDER);
-              io.observe(el);
-            });
-          })();
-        
-        });
-      </script>
-    </body>
-  </html>
+            },
+            { rootMargin: "200px 0px" },
+          );
+          targets.forEach((el) => {
+            if (!el.getAttribute("src")) el.setAttribute("src", PLACEHOLDER);
+            io.observe(el);
+          });
+        })();
+      });
+    </script>
+  </body>
+</html>
