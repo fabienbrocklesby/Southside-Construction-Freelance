@@ -143,7 +143,7 @@ export async function onRequestPost(context) {
 
     const apiKey = (ZEPTO_API_KEY || '').trim();
     const fromEmail = (FROM_EMAIL || '').trim();
-    const destEmailRaw = SOUTHSIDE_EMAIL || RECIPIENT_EMAIL || 'noreply@southsideconstruction.co.nz';
+    const destEmailRaw = SOUTHSIDE_EMAIL || RECIPIENT_EMAIL || 'info@southsideconstruction.co.nz';
     const destEmail = destEmailRaw.trim();
     const zeptoEndpointBase = (ZEPTO_API_BASE_URL || 'https://api.zeptomail.com.au/v1.1/email').trim();
     const zeptoEndpoint = zeptoEndpointBase.replace(/\/$/, '');
