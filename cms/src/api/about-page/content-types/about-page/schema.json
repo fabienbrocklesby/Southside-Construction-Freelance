@@ -1,0 +1,34 @@
+{
+  "kind": "singleType",
+  "collectionName": "about_pages",
+  "info": {
+    "singularName": "about-page",
+    "pluralName": "about-pages",
+    "displayName": "About Page",
+    "description": "Editable Where and what we build section for the about page."
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "whereWeBuildTitle": {
+      "type": "string",
+      "required": true
+    },
+    "whereWeBuildMainText": {
+      "type": "text",
+      "required": true
+    },
+    "capabilityItems": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.bullet-item"
+    },
+    "sideImages": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.side-image"
+    }
+  }
+}

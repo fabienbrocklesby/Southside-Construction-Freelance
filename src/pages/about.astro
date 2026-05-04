@@ -1,6 +1,12 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { fallbackAboutContent, getAboutContent } from "../lib/cms";
 import { cfImage, cfSrcSet } from "../utils/images";
+
+const aboutContent = await getAboutContent();
+const firstSideImage = aboutContent.sideImages[0] ?? fallbackAboutContent.sideImages[0];
+const secondSideImage = aboutContent.sideImages[1] ?? fallbackAboutContent.sideImages[1];
+const featureSideImage = aboutContent.sideImages[2] ?? fallbackAboutContent.sideImages[2];
 ---
 
 <BaseLayout title="About">
@@ -182,20 +188,13 @@ import { cfImage, cfSrcSet } from "../utils/images";
     <div class="grid gap-8 md:grid-cols-2 items-center">
       <div data-aos="fade-right">
         <h2 id="areas" class="text-3xl md:text-4xl font-bold">
-          Where and what we build
+          {aboutContent.whereWeBuildTitle}
         </h2>
         <p class="mt-4 opacity-90">
-          We cover Nelson, Tasman, Richmond, Motueka, Mapua, and nearby
-          communities. From new house builds to sheds, renovations, and outdoor
-          living — we tailor the approach to your site and lifestyle.
+          {aboutContent.whereWeBuildMainText}
         </p>
         <ul class="mt-4 grid grid-cols-2 gap-2 text-sm opacity-90">
-          <li>New homes</li>
-          <li>Sheds & workshops</li>
-          <li>Renovations</li>
-          <li>Extensions</li>
-          <li>Decks & fencing</li>
-          <li>Re-clads</li>
+          {aboutContent.capabilityItems.map((item) => <li>{item}</li>)}
         </ul>
         <p class="mt-3 text-sm opacity-80">
           Got something else in mind? We also take on custom projects after a
@@ -210,34 +209,40 @@ import { cfImage, cfSrcSet } from "../utils/images";
       </div>
       <div class="grid grid-cols-2 gap-4" data-aos="fade-left">
         <img
-          src="/thumbs/640/IMG_7833.jpg"
-          srcset="/thumbs/320/IMG_7833.jpg 320w, /thumbs/480/IMG_7833.jpg 480w, /thumbs/640/IMG_7833.jpg 640w"
+          src={cfImage(firstSideImage.src, { width: 640, quality: 75 })}
+          srcset={cfSrcSet(firstSideImage.src, [320, 480, 640], {
+            quality: 75,
+          })}
           sizes="(min-width: 768px) 15rem, 12rem"
-          alt="Deck and railing detail"
+          alt={firstSideImage.alt}
           class="rounded-xl h-48 md:h-60 w-full object-cover"
           loading="lazy"
-          width="640"
-          height="480"
+          width={firstSideImage.width ?? 640}
+          height={firstSideImage.height ?? 480}
         />
         <img
-          src="/thumbs/640/IMG_5660.jpg"
-          srcset="/thumbs/320/IMG_5660.jpg 320w, /thumbs/480/IMG_5660.jpg 480w, /thumbs/640/IMG_5660.jpg 640w"
+          src={cfImage(secondSideImage.src, { width: 640, quality: 75 })}
+          srcset={cfSrcSet(secondSideImage.src, [320, 480, 640], {
+            quality: 75,
+          })}
           sizes="(min-width: 768px) 15rem, 12rem"
-          alt="Shed exterior with durable cladding"
+          alt={secondSideImage.alt}
           class="rounded-xl h-48 md:h-60 w-full object-cover"
           loading="lazy"
-          width="640"
-          height="480"
+          width={secondSideImage.width ?? 640}
+          height={secondSideImage.height ?? 480}
         />
         <img
-          src="/thumbs/960/IMG_9432.jpg"
-          srcset="/thumbs/640/IMG_9432.jpg 640w, /thumbs/960/IMG_9432.jpg 960w"
+          src={cfImage(featureSideImage.src, { width: 960, quality: 75 })}
+          srcset={cfSrcSet(featureSideImage.src, [640, 960], {
+            quality: 75,
+          })}
           sizes="(min-width: 768px) 30rem, 24rem"
-          alt="Renovated interior"
+          alt={featureSideImage.alt}
           class="rounded-xl h-48 md:h-60 w-full object-cover col-span-2"
           loading="lazy"
-          width="960"
-          height="720"
+          width={featureSideImage.width ?? 960}
+          height={featureSideImage.height ?? 720}
         />
       </div>
     </div>

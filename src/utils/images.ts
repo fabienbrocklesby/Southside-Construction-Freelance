@@ -21,8 +21,13 @@ function stripLeadingSlash(p: string) {
   return p && p[0] === '/' ? p.slice(1) : p;
 }
 
+function isAbsoluteUrl(path: string) {
+  return /^https?:\/\//i.test(path) || path.startsWith('//');
+}
+
 export function cfImage(path: string, opts: CFOpts = {}) {
   // Hotfix: always return raw path so images work without CDN or JS.
+  if (isAbsoluteUrl(path)) return path;
   const p = stripLeadingSlash(path);
   return `/${p}`;
 }

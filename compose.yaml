@@ -1,0 +1,31 @@
+services:
+  strapi:
+    build:
+      context: ./cms
+    env_file:
+      - path: ./cms/.env.production
+        required: false
+    ports:
+      - '1337:1337'
+    volumes:
+      - strapi-data:/srv/app/data
+      - strapi-uploads:/srv/app/public/uploads
+      - strapi-backups:/srv/app/backups
+    restart: unless-stopped
+    healthcheck:
+      test:
+        [
+          'CMD',
+          'node',
+          '-e',
+          "fetch('http://127.0.0.1:1337/admin').then((r)=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))",
+        ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+volumes:
+  strapi-data:
+  strapi-uploads:
+  strapi-backups:

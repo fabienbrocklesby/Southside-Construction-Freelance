@@ -1,0 +1,10 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "southside-construction",
+  "account_id": "9f08cc5b560a2570e12982550b39f6ac",
+  "pages_build_output_dir": "./dist",
+  "compatibility_date": "2026-05-04",
+  "vars": {
+    "CORS_ORIGINS": "https://southsideconstruction.nz,https://www.southsideconstruction.nz,https://southsideconstruction.co.nz,https://www.southsideconstruction.co.nz"
+  }
+}
