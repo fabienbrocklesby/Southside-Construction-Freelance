@@ -1,0 +1,156 @@
+---
+import type { GalleryPhoto } from "../lib/cms";
+import { cfImage, cfSrcSet } from "../utils/images";
+
+type Props = {
+  photos: GalleryPhoto[];
+  label?: string;
+};
+
+const { photos, label = "Gallery photos" } = Astro.props;
+---
+
+<section
+  aria-label={label}
+  class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+  data-aos="fade-up"
+>
+  {
+    photos.map((photo, index) => {
+      const caption = photo.caption || photo.altText || `Image ${index + 1}`;
+
+      return (
+        <figure
+          class="group cursor-zoom-in overflow-hidden rounded-xl border bg-white shadow-sm"
+          data-gallery-index={index}
+          data-gallery-src={photo.image.src}
+          data-gallery-caption={caption}
+          data-gallery-alt={photo.altText || photo.image.alt}
+        >
+          <div class="aspect-[4/3] overflow-hidden rounded-xl bg-gray-100">
+            <img
+              src={cfImage(photo.image.src, { width: 640, quality: 75 })}
+              srcset={cfSrcSet(photo.image.src, [320, 480, 640], { quality: 75 })}
+              sizes="(min-width: 1280px) 25vw, (min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+              alt={photo.altText || photo.image.alt}
+              loading="lazy"
+              decoding="async"
+              class="h-full w-full rounded-xl object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+            />
+          </div>
+        </figure>
+      );
+    })
+  }
+</section>
+
+<div
+  id="lightbox"
+  class="fixed inset-0 z-50 hidden items-center justify-center bg-black/90 p-4 overflow-hidden"
+>
+  <button id="lb-close" class="absolute top-4 right-4 btn btn-sm"
+    >Close</button
+  >
+  <button
+    id="lb-prev"
+    class="hidden sm:flex absolute left-3 md:left-6 top-1/2 -translate-y-1/2 btn btn-circle"
+    aria-label="Previous image"
+    >&lsaquo;</button
+  >
+  <figure class="max-w-5xl w-full flex flex-col items-center">
+    <img
+      id="lb-image"
+      src=""
+      alt=""
+      class="max-h-[80vh] max-w-full w-auto rounded-lg object-contain shadow-2xl"
+    />
+    <figcaption
+      id="lb-caption"
+      class="mt-3 text-white/80 text-sm text-center"
+    >
+    </figcaption>
+  </figure>
+  <button
+    id="lb-next"
+    class="hidden sm:flex absolute right-3 md:right-6 top-1/2 -translate-y-1/2 btn btn-circle"
+    aria-label="Next image"
+    >&rsaquo;</button
+  >
+</div>
+
+<script is:inline>
+  document.addEventListener("DOMContentLoaded", () => {
+    const lightbox = document.getElementById("lightbox");
+    const imgEl = document.getElementById("lb-image");
+    const capEl = document.getElementById("lb-caption");
+    const btnClose = document.getElementById("lb-close");
+    const btnPrev = document.getElementById("lb-prev");
+    const btnNext = document.getElementById("lb-next");
+    const items = Array.from(document.querySelectorAll("figure[data-gallery-index]"));
+    const total = items.length;
+    let currentPos = -1;
+    let order = items.map((f) => Number(f.getAttribute("data-gallery-index")) || 0);
+    let lightboxOpen = false;
+
+    if (!lightbox || !imgEl || !capEl || !btnClose || !btnPrev || !btnNext || !total) {
+      return;
+    }
+
+    function getFigureByIndex(i) {
+      return document.querySelector(`figure[data-gallery-index="${i}"]`);
+    }
+
+    function openAtByIndex(idx) {
+      currentPos = Math.max(0, order.indexOf(idx));
+      const realIdx = order[currentPos];
+      const f = getFigureByIndex(realIdx);
+      if (!f) return;
+      const src = f.getAttribute("data-gallery-src");
+      const caption = f.getAttribute("data-gallery-caption") || `Image ${currentPos + 1}`;
+      const alt = f.getAttribute("data-gallery-alt") || caption;
+      imgEl.src = src || "";
+      imgEl.alt = alt;
+      capEl.textContent = caption;
+      lightbox.classList.remove("hidden");
+      lightbox.classList.add("flex");
+      lightboxOpen = true;
+    }
+
+    function close() {
+      lightbox.classList.add("hidden");
+      lightbox.classList.remove("flex");
+      imgEl.src = "";
+      lightboxOpen = false;
+    }
+
+    function prev() {
+      if (!total) return;
+      currentPos = (currentPos - 1 + order.length) % order.length;
+      openAtByIndex(order[currentPos]);
+    }
+
+    function next() {
+      if (!total) return;
+      currentPos = (currentPos + 1) % order.length;
+      openAtByIndex(order[currentPos]);
+    }
+
+    items.forEach((f) => {
+      const idx = Number(f.getAttribute("data-gallery-index")) || 0;
+      f.addEventListener("click", () => openAtByIndex(idx));
+    });
+
+    btnClose.addEventListener("click", close);
+    btnPrev.addEventListener("click", prev);
+    btnNext.addEventListener("click", next);
+    lightbox.addEventListener("click", (e) => {
+      if (e.target === lightbox) close();
+    });
+    document.addEventListener("keydown", (e) => {
+      if (lightbox.classList.contains("hidden")) return;
+      if (e.key === "Escape") close();
+      if (e.key === "ArrowLeft") prev();
+      if (e.key === "ArrowRight") next();
+    });
+  });
+</script>

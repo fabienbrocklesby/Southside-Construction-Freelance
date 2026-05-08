@@ -37,6 +37,11 @@ export type GalleryPhoto = {
   order: number;
 };
 
+export type GalleryContent = {
+  categories: GalleryCategory[];
+  photos: GalleryPhoto[];
+};
+
 export type ContactContent = {
   heroTitle: string;
   heroDescription: string;

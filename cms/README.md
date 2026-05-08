@@ -33,14 +33,14 @@ Use Draft & Publish for page content and collections. For launch, publish the re
 
 ## Media Uploads
 
-Local development uses Strapi's default local upload provider. Uploaded files are stored in `cms/public/uploads`.
+Media uploads use Cloudflare R2 through Strapi's official `@strapi/provider-upload-aws-s3` provider. The Strapi user only uploads through the Media Library; Strapi writes the original file and generated responsive formats to R2 and stores the returned media URLs in the Strapi database.
 
-Production uses Cloudflare R2 through Strapi's official `@strapi/provider-upload-aws-s3` provider. The Strapi user only uploads through the Media Library; Strapi writes the original file and generated responsive formats to R2 and stores the returned media URLs in the Strapi database.
+Set `R2_UPLOAD_ENABLED=true` or provide R2 credentials. If R2 is enabled but required credentials are missing, Strapi fails startup instead of silently falling back to local uploads.
 
 ```env
 R2_UPLOAD_ENABLED=true
 R2_ACCESS_KEY_ID=...
-R2_ACCESS_SECRET=...
+R2_SECRET_ACCESS_KEY=...
 R2_BUCKET=southside-construction-strapi-media
 R2_ENDPOINT=https://<account-id>.r2.cloudflarestorage.com
 R2_PUBLIC_URL=https://assets.example.com

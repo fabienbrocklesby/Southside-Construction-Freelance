@@ -4,13 +4,48 @@ const R2_ACCOUNT_ID = '9f08cc5b560a2570e12982550b39f6ac';
 const R2_BUCKET = 'southside-construction-strapi-media';
 const R2_PUBLIC_DEV_URL = 'https://pub-8fffd787049d49baa5ea1904061fcd51.r2.dev';
 
+function readEnv(env: Core.Config.Shared.ConfigParams['env'], keys: string[], fallback = '') {
+  for (const key of keys) {
+    const value = env(key);
+    if (value) return value;
+  }
+
+  return fallback;
+}
+
 const config = ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Plugin => {
-  if (!env.bool('R2_UPLOAD_ENABLED', false)) {
+  const accessKeyId = readEnv(env, ['R2_ACCESS_KEY_ID', 'AWS_ACCESS_KEY_ID']);
+  const secretAccessKey = readEnv(env, [
+    'R2_SECRET_ACCESS_KEY',
+    'R2_ACCESS_SECRET',
+    'AWS_SECRET_ACCESS_KEY',
+    'AWS_ACCESS_SECRET',
+  ]);
+  const bucket = env('R2_BUCKET', R2_BUCKET);
+  const endpoint = env('R2_ENDPOINT', `https://${R2_ACCOUNT_ID}.r2.cloudflarestorage.com`);
+  const shouldUseR2 = env.bool('R2_UPLOAD_ENABLED', Boolean(accessKeyId || secretAccessKey));
+
+  if (!shouldUseR2) {
     return {};
+  }
+
+  const missing = [
+    !accessKeyId ? 'R2_ACCESS_KEY_ID' : '',
+    !secretAccessKey ? 'R2_SECRET_ACCESS_KEY' : '',
+    !bucket ? 'R2_BUCKET' : '',
+    !endpoint ? 'R2_ENDPOINT' : '',
+  ].filter(Boolean);
+
+  if (missing.length) {
+    throw new Error(
+      `R2 uploads are enabled, but missing required env var(s): ${missing.join(', ')}.`,
+    );
   }
 
   const publicUrl = env('R2_PUBLIC_URL', R2_PUBLIC_DEV_URL).replace(/\/+$/, '');
   const rootPath = env('R2_ROOT_PATH', '').replace(/^\/+|\/+$/g, '');
+
+  console.info(`Strapi upload provider: Cloudflare R2 bucket "${bucket}" via ${endpoint}`);
 
   return {
     upload: {
@@ -21,13 +56,13 @@ const config = ({ env }: Core.Config.Shared.ConfigParams): Core.Config.Plugin =>
           ...(rootPath ? { rootPath } : {}),
           s3Options: {
             credentials: {
-              accessKeyId: env('R2_ACCESS_KEY_ID'),
-              secretAccessKey: env('R2_ACCESS_SECRET'),
+              accessKeyId,
+              secretAccessKey,
             },
-            endpoint: env('R2_ENDPOINT', `https://${R2_ACCOUNT_ID}.r2.cloudflarestorage.com`),
+            endpoint,
             region: 'auto',
             params: {
-              Bucket: env('R2_BUCKET', R2_BUCKET),
+              Bucket: bucket,
             },
           },
           providerConfig: {

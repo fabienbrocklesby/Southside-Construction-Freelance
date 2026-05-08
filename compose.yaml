@@ -9,7 +9,6 @@ services:
       - '1337:1337'
     volumes:
       - strapi-data:/srv/app/data
-      - strapi-uploads:/srv/app/public/uploads
       - strapi-backups:/srv/app/backups
     restart: unless-stopped
     healthcheck:
@@ -27,5 +26,4 @@ services:
 
 volumes:
   strapi-data:
-  strapi-uploads:
   strapi-backups:

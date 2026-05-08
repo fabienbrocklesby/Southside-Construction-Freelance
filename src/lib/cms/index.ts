@@ -17,6 +17,7 @@ import {
 import type {
   AboutContent,
   ContactContent,
+  GalleryContent,
   GalleryCategory,
   GalleryPhoto,
   HomeContent,
@@ -27,6 +28,7 @@ export type {
   AboutContent,
   CmsImage,
   ContactContent,
+  GalleryContent,
   GalleryCategory,
   GalleryPhoto,
   HomeContent,
@@ -93,6 +95,44 @@ function sortByOrder<T extends { order: number }>(items: T[]) {
   return [...items].sort((a, b) => a.order - b.order);
 }
 
+function normalizeGalleryCategories(items: Record<string, unknown>[]) {
+  return sortByOrder(
+    items.filter(isEnabled).map((item, index) => {
+      const fallback = fallbackGalleryCategories[index] ?? fallbackGalleryCategories[0];
+
+      return {
+        title: readString(item.title, fallback.title),
+        slug: readString(item.slug, fallback.slug),
+        thumbnail: normalizeMedia(
+          item.thumbnailImage,
+          fallback.thumbnail,
+          readString(item.thumbnailAltText, fallback.thumbnail.alt),
+        ),
+        order: readNumber(item.order, fallback.order),
+      };
+    }),
+  );
+}
+
+function normalizeGalleryPhotos(items: Record<string, unknown>[]) {
+  return sortByOrder(
+    items.filter(isEnabled).map((item, index) => {
+      const fallback = fallbackGalleryPhotos[index] ?? fallbackGalleryPhotos[0];
+      const category = unwrapStrapiEntity(item.category);
+      const altText = readString(item.altText, fallback.altText);
+
+      return {
+        image: normalizeMedia(item.image, fallback.image, altText),
+        caption: readString(item.caption, fallback.caption),
+        altText,
+        categorySlug: readString(category?.slug, fallback.categorySlug),
+        categoryTitle: readString(category?.title, fallback.categoryTitle),
+        order: readNumber(item.order, fallback.order),
+      };
+    }),
+  );
+}
+
 export async function getHomeContent(): Promise<HomeContent> {
   const data = await fetchStrapiData("/api/home-page", homePageQuery, "home-page");
   const item = unwrapStrapiEntity(data);
@@ -147,22 +187,8 @@ export async function getGalleryCategories(): Promise<GalleryCategory[]> {
   const items = unwrapStrapiCollection(data);
   if (!items.length) return fallbackGalleryCategories;
 
-  return sortByOrder(
-    items.map((item, index) => {
-      const fallback = fallbackGalleryCategories[index] ?? fallbackGalleryCategories[0];
-
-      return {
-        title: readString(item.title, fallback.title),
-        slug: readString(item.slug, fallback.slug),
-        thumbnail: normalizeMedia(
-          item.thumbnailImage,
-          fallback.thumbnail,
-          readString(item.thumbnailAltText, fallback.thumbnail.alt),
-        ),
-        order: readNumber(item.order, fallback.order),
-      };
-    }),
-  );
+  const categories = normalizeGalleryCategories(items);
+  return categories.length ? categories : fallbackGalleryCategories;
 }
 
 export async function getGalleryPhotos(): Promise<GalleryPhoto[]> {
@@ -174,22 +200,34 @@ export async function getGalleryPhotos(): Promise<GalleryPhoto[]> {
   const items = unwrapStrapiCollection(data);
   if (!items.length) return fallbackGalleryPhotos;
 
-  return sortByOrder(
-    items.map((item, index) => {
-      const fallback = fallbackGalleryPhotos[index] ?? fallbackGalleryPhotos[0];
-      const category = unwrapStrapiEntity(item.category);
-      const altText = readString(item.altText, fallback.altText);
+  const photos = normalizeGalleryPhotos(items);
+  return photos.length ? photos : fallbackGalleryPhotos;
+}
 
-      return {
-        image: normalizeMedia(item.image, fallback.image, altText),
-        caption: readString(item.caption, fallback.caption),
-        altText,
-        categorySlug: readString(category?.slug, fallback.categorySlug),
-        categoryTitle: readString(category?.title, fallback.categoryTitle),
-        order: readNumber(item.order, fallback.order),
-      };
-    }),
-  );
+export async function getGalleryContent(): Promise<GalleryContent> {
+  const [categoryData, photoData] = await Promise.all([
+    fetchStrapiData("/api/gallery-categories", galleryCategoriesQuery, "gallery-categories"),
+    fetchStrapiData("/api/gallery-photos", galleryPhotosQuery, "gallery-photos"),
+  ]);
+
+  const categoryItems = unwrapStrapiCollection(categoryData);
+  const photoItems = unwrapStrapiCollection(photoData);
+  const categories = normalizeGalleryCategories(categoryItems);
+  const photos = normalizeGalleryPhotos(photoItems);
+
+  if (!categories.length || !photos.length) {
+    return {
+      categories: fallbackGalleryCategories,
+      photos: fallbackGalleryPhotos,
+    };
+  }
+
+  const categorySlugs = new Set(categories.map((category) => category.slug));
+
+  return {
+    categories,
+    photos: photos.filter((photo) => photo.categorySlug && categorySlugs.has(photo.categorySlug)),
+  };
 }
 
 export async function getContactContent(): Promise<ContactContent> {
