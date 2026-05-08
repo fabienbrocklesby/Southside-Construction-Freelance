@@ -58,6 +58,15 @@ The seed script uploads the existing images from `public/images`, creates the cu
 
 The script is not idempotent for collection entries. If you run it twice, it will create duplicate service/gallery records. Review and publish seeded drafts in the Strapi admin before wiring Astro to the API.
 
+To migrate only the old local images into the Strapi Media Library and R2, without creating page/gallery content, run:
+
+```bash
+STRAPI_URL=https://your-cms-url.example STRAPI_API_TOKEN=... npm run cms:media:migrate -- --dry-run
+STRAPI_URL=https://your-cms-url.example STRAPI_API_TOKEN=... npm run cms:media:migrate -- --yes
+```
+
+The migration uses Strapi's Upload API. This is important: uploading directly to R2 would copy the objects, but Strapi's media browser would not see them because no upload records would exist in the Strapi database.
+
 ## Later Astro Integration
 
 Astro should remain static and fetch CMS data during `astro build` using:
@@ -66,6 +75,8 @@ Astro should remain static and fetch CMS data during `astro build` using:
 STRAPI_URL=https://your-cms-url.example
 STRAPI_API_TOKEN=...
 ```
+
+For production content updates, set `CLOUDFLARE_PAGES_DEPLOY_HOOK_URL` in `cms/.env.production`. Strapi will POST that deploy hook after relevant content or media changes, with a short debounce to avoid rebuild bursts. The hook URL must be kept secret.
 
 Expected REST reads:
 

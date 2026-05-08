@@ -25,6 +25,7 @@
     "cms:start": "npm --workspace cms run start",
     "cms:backup": "npm --workspace cms run db:backup",
     "cms:seed:current": "node cms/scripts/seed-current-content.mjs",
+    "cms:media:migrate": "node cms/scripts/migrate-local-images-to-strapi.mjs",
     "images:fullsize": "node scripts/optimize-fullsize.mjs",
     "images:compress": "npm run images:fullsize",
     "images:thumbs": "node scripts/gen-thumbs.mjs",

@@ -141,14 +141,36 @@ Cloudflare Pages Deploy Hooks are the standard fit for a static frontend backed 
 4. Create a hook for the production branch.
 5. Copy the hook URL and keep it secret.
 
-Then in Strapi production:
+Then set the hook URL on the production Strapi server:
+
+```bash
+CLOUDFLARE_PAGES_DEPLOY_HOOK_URL=<paste the copied Cloudflare Deploy Hook URL>
+PAGES_REBUILD_DEBOUNCE_MS=10000
+```
+
+Restart the Strapi container after changing `cms/.env.production`.
+
+This repo also has a code-level Strapi lifecycle subscriber that POSTs the hook after relevant home/about/contact/gallery/media changes. The debounce prevents one media upload or content save from queueing a burst of rebuilds.
+
+Alternatively, in Strapi production you can use Strapi's built-in webhook UI:
 
 1. Open Settings > Webhooks.
 2. Add a webhook named `Cloudflare Pages rebuild`.
 3. Paste the Cloudflare Deploy Hook URL.
 4. Enable entry create/update/delete/publish/unpublish and media create/update/delete events.
 
-Every relevant Strapi content or media change will POST to Cloudflare, which starts a new Pages build. Astro fetches the Strapi content during `npm run build`, then emits static HTML into `dist/`.
+Every relevant Strapi content or media change should POST to Cloudflare, which starts a new Pages build. Astro fetches the Strapi content during `npm run build`, then emits static HTML into `dist/`.
+
+## Migrating Existing Images into Strapi/R2
+
+Use Strapi's Upload API so each file is both uploaded to R2 and registered in Strapi's upload database tables:
+
+```bash
+STRAPI_URL=https://strapi.southsideconstruction.co.nz STRAPI_API_TOKEN=... npm run cms:media:migrate -- --dry-run
+STRAPI_URL=https://strapi.southsideconstruction.co.nz STRAPI_API_TOKEN=... npm run cms:media:migrate -- --yes
+```
+
+The script scans `public/images` by default, skips files already present in Strapi by filename, and uploads missing files. Do not copy files directly into R2 for this migration unless you also create matching Strapi upload records; otherwise the Strapi media selector will not list them.
 
 ## References
 
