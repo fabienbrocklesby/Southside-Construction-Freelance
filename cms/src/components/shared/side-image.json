@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_shared_side_images",
+  "info": {
+    "displayName": "Side Image",
+    "description": "An image with alt text for page-side image grids."
+  },
+  "options": {},
+  "attributes": {
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "altText": {
+      "type": "string",
+      "required": true
+    }
+  }
+}

@@ -1,6 +1,11 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import WhatWeBuildCard from "../components/WhatWeBuildCard.astro";
+import { getHomeContent, getServiceCards } from "../lib/cms";
 import { cfImage, cfSrcSet } from "../utils/images";
+
+const homeContent = await getHomeContent();
+const serviceCards = await getServiceCards();
 ---
 
 <BaseLayout title="Home">
@@ -12,12 +17,16 @@ import { cfImage, cfSrcSet } from "../utils/images";
   >
     <picture>
       <img
-        src={cfImage("/images/IMG_0609.jpg", { width: 1600, quality: 78 })}
-        srcset={cfSrcSet("/images/IMG_0609.jpg", [640, 960, 1280, 1600, 2000], {
-          quality: 78,
-        })}
+        src={cfImage(homeContent.heroImage.src, { width: 1600, quality: 78 })}
+        srcset={cfSrcSet(
+          homeContent.heroImage.src,
+          [640, 960, 1280, 1600, 2000],
+          {
+            quality: 78,
+          },
+        )}
         sizes="100vw"
-        alt="Modern home exterior built by Southside Construction"
+        alt={homeContent.heroImage.alt}
         class="w-full h-[60vh] min-h-[380px] object-cover hero-img"
         loading="eager"
         decoding="async"
@@ -31,12 +40,10 @@ import { cfImage, cfSrcSet } from "../utils/images";
     <div class="absolute inset-0 max-w-5xl mx-auto px-4 flex items-end pb-10">
       <div class="text-white" data-aos="fade-up" data-aos-delay="100">
         <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight">
-          Building excellence across Nelson Tasman
+          {homeContent.heroTitle}
         </h1>
         <p class="mt-4 text-base sm:text-lg md:text-xl max-w-2xl">
-          New house builds, sheds, renovations, decks and fencing, crafted with
-          precision, delivered with care, and built to last in our local
-          climate.
+          {homeContent.heroDescription}
         </p>
         <div class="mt-6 flex flex-wrap gap-3">
           <a
@@ -95,17 +102,14 @@ import { cfImage, cfSrcSet } from "../utils/images";
           class="text-3xl md:text-4xl font-bold"
           data-aos="fade-right"
         >
-          What we build
+          {homeContent.servicesIntroTitle}
         </h2>
         <p
           class="opacity-80 max-w-2xl mt-2"
           data-aos="fade-right"
           data-aos-delay="100"
         >
-          From dream homes to durable sheds and outdoor living, we deliver
-          thoughtful builds that suit your site, budget, and lifestyle. Need
-          something not listed? We take on custom projects after a quick chat to
-          scope it properly.
+          {homeContent.servicesIntroText}
         </p>
       </div>
       <div class="flex items-center gap-3 flex-wrap" data-aos="fade-left">
@@ -119,133 +123,11 @@ import { cfImage, cfSrcSet } from "../utils/images";
     </div>
 
     <div class="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-      <!-- New house building -->
-      <article
-        class="group rounded-xl border overflow-hidden bg-white"
-        data-aos="zoom-in"
-      >
-        <figure class="aspect-[4/3] overflow-hidden">
-          <img
-            src="/thumbs/640/IMG_1105.jpg"
-            srcset="/thumbs/320/IMG_1105.jpg 320w, /thumbs/480/IMG_1105.jpg 480w, /thumbs/640/IMG_1105.jpg 640w"
-            sizes="(min-width: 1280px) 25vw, (min-width: 768px) 50vw, 100vw"
-            alt="New house build exterior"
-            class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-            loading="lazy"
-            width="640"
-            height="480"
-          />
-        </figure>
-        <div class="p-5 space-y-2">
-          <h3 class="text-xl font-semibold">New house building</h3>
-          <p class="text-sm opacity-80">
-            Architecturally-led or design-and-build, we manage details from
-            foundations to finishes — warm, efficient, and fit for Nelson Tasman
-            conditions.
-          </p>
-          <ul class="text-sm list-disc pl-5 space-y-1 opacity-90">
-            <li>Design coordination and council consent</li>
-            <li>Energy-efficient framing and insulation</li>
-            <li>High-quality interior fit-out</li>
-          </ul>
-        </div>
-      </article>
-
-      <!-- Sheds -->
-      <article
-        class="group rounded-xl border overflow-hidden bg-white"
-        data-aos="zoom-in"
-        data-aos-delay="100"
-      >
-        <figure class="aspect-[4/3] overflow-hidden">
-          <img
-            src="/thumbs/640/IMG_9520.jpg"
-            srcset="/thumbs/320/IMG_9520.jpg 320w, /thumbs/480/IMG_9520.jpg 480w, /thumbs/640/IMG_9520.jpg 640w"
-            sizes="(min-width: 1280px) 25vw, (min-width: 768px) 50vw, 100vw"
-            alt="Custom shed build"
-            class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-            loading="lazy"
-            width="640"
-            height="480"
-          />
-        </figure>
-        <div class="p-5 space-y-2">
-          <h3 class="text-xl font-semibold">Sheds</h3>
-          <p class="text-sm opacity-80">
-            Workshops, farm sheds, and storage buildings built tough — sized to
-            your needs with durable cladding and secure access systems.
-          </p>
-          <ul class="text-sm list-disc pl-5 space-y-1 opacity-90">
-            <li>Concrete pads and drainage</li>
-            <li>Roller doors, windows, ventilation</li>
-            <li>Rural and residential sites</li>
-          </ul>
-        </div>
-      </article>
-
-      <!-- Renovations -->
-      <article
-        class="group rounded-xl border overflow-hidden bg-white"
-        data-aos="zoom-in"
-        data-aos-delay="200"
-      >
-        <figure class="aspect-[4/3] overflow-hidden">
-          <img
-            src="/thumbs/640/IMG_1075.jpg"
-            srcset="/thumbs/320/IMG_1075.jpg 320w, /thumbs/480/IMG_1075.jpg 480w, /thumbs/640/IMG_1075.jpg 640w"
-            sizes="(min-width: 1280px) 25vw, (min-width: 768px) 50vw, 100vw"
-            alt="Renovated interior space"
-            class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-            loading="lazy"
-            width="640"
-            height="480"
-          />
-        </figure>
-        <div class="p-5 space-y-2">
-          <h3 class="text-xl font-semibold">Renovations</h3>
-          <p class="text-sm opacity-80">
-            Transform kitchens, bathrooms, and living spaces. We improve flow,
-            light, and performance without disrupting your daily life.
-          </p>
-          <ul class="text-sm list-disc pl-5 space-y-1 opacity-90">
-            <li>Structural alterations and relevels</li>
-            <li>Warm, dry, and weathertight upgrades</li>
-            <li>Seamless extensions and re-clads</li>
-          </ul>
-        </div>
-      </article>
-
-      <!-- Decks & Fencing -->
-      <article
-        class="group rounded-xl border overflow-hidden bg-white"
-        data-aos="zoom-in"
-        data-aos-delay="300"
-      >
-        <figure class="aspect-[4/3] overflow-hidden">
-          <img
-            src="/thumbs/640/IMG_7832.jpg"
-            srcset="/thumbs/320/IMG_7832.jpg 320w, /thumbs/480/IMG_7832.jpg 480w, /thumbs/640/IMG_7832.jpg 640w"
-            sizes="(min-width: 1280px) 25vw, (min-width: 768px) 50vw, 100vw"
-            alt="Timber deck and fencing"
-            class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-            loading="lazy"
-            width="640"
-            height="480"
-          />
-        </figure>
-        <div class="p-5 space-y-2">
-          <h3 class="text-xl font-semibold">Decks & fencing</h3>
-          <p class="text-sm opacity-80">
-            Extend your living outdoors with durable decking and privacy fencing
-            — perfect for summer in Tasman.
-          </p>
-          <ul class="text-sm list-disc pl-5 space-y-1 opacity-90">
-            <li>Hardwood, pine, and composite options</li>
-            <li>Stairs, handrails, and screens</li>
-            <li>Engineered substructures</li>
-          </ul>
-        </div>
-      </article>
+      {
+        serviceCards.map((card, index) => (
+          <WhatWeBuildCard card={card} index={index} />
+        ))
+      }
     </div>
   </section>
 

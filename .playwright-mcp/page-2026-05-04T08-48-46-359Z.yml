@@ -1,0 +1,225 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - navigation [ref=e3]:
+      - link "Southside Construction home" [ref=e5] [cursor=pointer]:
+        - /url: /
+        - img "Southside Construction" [ref=e7]
+      - group [ref=e9]:
+        - generic "Open menu" [ref=e10] [cursor=pointer]:
+          - img [ref=e11]
+  - main [ref=e13]:
+    - 'region "Hero: Southside Construction" [ref=e14]':
+      - img "Modern home exterior built by Southside Construction" [ref=e16]
+      - generic [ref=e19]:
+        - heading "Building excellence across Nelson Tasman" [level=1] [ref=e20]
+        - paragraph [ref=e21]: New house builds, sheds, renovations, decks and fencing, crafted with precision, delivered with care, and built to last in our local climate.
+        - generic [ref=e22]:
+          - link "Get a free quote" [ref=e23] [cursor=pointer]:
+            - /url: /contact
+          - link "View our work" [ref=e24] [cursor=pointer]:
+            - /url: /gallery
+    - region "Quick facts" [ref=e25]:
+      - generic [ref=e26]:
+        - generic [ref=e27]:
+          - generic [ref=e28]: Local
+          - generic [ref=e29]: Nelson & Tasman owned and operated
+        - generic [ref=e30]:
+          - generic [ref=e31]: Licensed
+          - generic [ref=e32]: Qualified, licensed building practitioners
+        - generic [ref=e33]:
+          - generic [ref=e34]: On-time
+          - generic [ref=e35]: Clear timelines and tidy sites
+    - region "What we build" [ref=e36]:
+      - generic [ref=e37]:
+        - generic [ref=e38]:
+          - heading "What we build" [level=2] [ref=e39]
+          - paragraph [ref=e40]: From dream homes to durable sheds and outdoor living, we deliver thoughtful builds that suit your site, budget, and lifestyle. Need something not listed? We take on custom projects after a quick chat to scope it properly.
+        - link "Start your project" [ref=e42] [cursor=pointer]:
+          - /url: /contact
+      - generic [ref=e43]:
+        - article [ref=e44]:
+          - figure [ref=e45]:
+            - img "New house build exterior" [ref=e46]
+          - generic [ref=e47]:
+            - heading "New house building" [level=3] [ref=e48]
+            - paragraph [ref=e49]: Architecturally-led or design-and-build, we manage details from foundations to finishes - warm, efficient, and fit for Nelson Tasman conditions.
+            - list [ref=e50]:
+              - listitem [ref=e51]: Design coordination and council consent
+              - listitem [ref=e52]: Energy-efficient framing and insulation
+              - listitem [ref=e53]: High-quality interior fit-out
+        - article [ref=e54]:
+          - figure [ref=e55]:
+            - img "Custom shed build" [ref=e56]
+          - generic [ref=e57]:
+            - heading "Sheds" [level=3] [ref=e58]
+            - paragraph [ref=e59]: Workshops, farm sheds, and storage buildings built tough - sized to your needs with durable cladding and secure access systems.
+            - list [ref=e60]:
+              - listitem [ref=e61]: Concrete pads and drainage
+              - listitem [ref=e62]: Roller doors, windows, ventilation
+              - listitem [ref=e63]: Rural and residential sites
+        - article [ref=e64]:
+          - figure [ref=e65]:
+            - img "Renovated interior space" [ref=e66]
+          - generic [ref=e67]:
+            - heading "Renovations" [level=3] [ref=e68]
+            - paragraph [ref=e69]: Transform kitchens, bathrooms, and living spaces. We improve flow, light, and performance without disrupting your daily life.
+            - list [ref=e70]:
+              - listitem [ref=e71]: Structural alterations and relevels
+              - listitem [ref=e72]: Warm, dry, and weathertight upgrades
+              - listitem [ref=e73]: Seamless extensions and re-clads
+        - article [ref=e74]:
+          - figure [ref=e75]:
+            - img "Timber deck and fencing" [ref=e76]
+          - generic [ref=e77]:
+            - heading "Decks & fencing" [level=3] [ref=e78]
+            - paragraph [ref=e79]: Extend your living outdoors with durable decking and privacy fencing - perfect for summer in Tasman.
+            - list [ref=e80]:
+              - listitem [ref=e81]: Hardwood, pine, and composite options
+              - listitem [ref=e82]: Stairs, handrails, and screens
+              - listitem [ref=e83]: Engineered substructures
+    - region "Built local. Built right." [ref=e84]:
+      - generic [ref=e85]:
+        - generic [ref=e86]:
+          - heading "Built local. Built right." [level=2] [ref=e87]
+          - paragraph [ref=e88]: We’re a Nelson Tasman building team focused on quality craftsmanship, tidy sites, and straight talk. Whether it’s a brand-new home or a practical shed, we keep you informed, stick to timelines, and treat your project like our own.
+          - list [ref=e89]:
+            - listitem [ref=e90]:
+              - generic [ref=e92]:
+                - strong [ref=e93]: "Clear process:"
+                - text: design, consent, build — guided end-to-end.
+            - listitem [ref=e94]:
+              - generic [ref=e96]:
+                - strong [ref=e97]: "Quality trades:"
+                - text: trusted local subcontractors and suppliers.
+            - listitem [ref=e98]:
+              - generic [ref=e100]:
+                - strong [ref=e101]: "Transparent pricing:"
+                - text: detailed scopes and fair variations.
+            - listitem [ref=e102]:
+              - generic [ref=e104]:
+                - strong [ref=e105]: "Aftercare:"
+                - text: we stand behind our work — no loose ends.
+          - generic [ref=e106]:
+            - link "Meet the team" [ref=e107] [cursor=pointer]:
+              - /url: /about
+            - link "Book a site visit" [ref=e108] [cursor=pointer]:
+              - /url: /contact
+        - img "Southside team on site" [ref=e110]
+    - region "How we work" [ref=e111]:
+      - heading "How we work" [level=2] [ref=e112]
+      - list [ref=e113]:
+        - listitem [ref=e114]:
+          - generic [ref=e115]: "01"
+          - heading "Consult & scope" [level=3] [ref=e116]
+          - paragraph [ref=e117]: We listen, visit your site, and outline options, budget ranges, and timelines.
+        - listitem [ref=e118]:
+          - generic [ref=e119]: "02"
+          - heading "Design & consent" [level=3] [ref=e120]
+          - paragraph [ref=e121]: We coordinate designers and engineers, then manage council approvals.
+        - listitem [ref=e122]:
+          - generic [ref=e123]: "03"
+          - heading "Build & manage" [level=3] [ref=e124]
+          - paragraph [ref=e125]: Qualified builders on site, clear communication, tidy and safe work areas.
+        - listitem [ref=e126]:
+          - generic [ref=e127]: "04"
+          - heading "Handover & support" [level=3] [ref=e128]
+          - paragraph [ref=e129]: Final QA, documentation, and support after you move in or start using it.
+    - region "Gallery strip" [ref=e130]:
+      - generic [ref=e131]:
+        - img "Project photo 1" [ref=e132]
+        - img "Project photo 2" [ref=e133]
+        - img "Project photo 3" [ref=e134]
+        - img "Project photo 4" [ref=e135]
+        - img "Project photo 5" [ref=e136]
+        - img "Project photo 6" [ref=e137]
+    - region "Frequently asked questions" [ref=e138]:
+      - heading "Frequently asked questions" [level=2] [ref=e139]
+      - generic [ref=e140]:
+        - generic [ref=e141]:
+          - checkbox [ref=e142] [cursor=pointer]
+          - generic [ref=e143] [cursor=pointer]: Do you handle council consents?
+        - generic [ref=e144]:
+          - checkbox [ref=e145] [cursor=pointer]
+          - generic [ref=e146] [cursor=pointer]: Can you work to a budget?
+        - generic [ref=e147]:
+          - checkbox [ref=e148] [cursor=pointer]
+          - generic [ref=e149] [cursor=pointer]: What areas do you service?
+        - generic [ref=e150]:
+          - checkbox [ref=e151] [cursor=pointer]
+          - generic [ref=e152] [cursor=pointer]: Are you a licensed building practitioner?
+    - region "Call to action" [ref=e153]:
+      - img "Outdoor living space" [ref=e154]
+      - generic [ref=e157]:
+        - heading "Ready to build? Let’s talk." [level=2] [ref=e158]
+        - paragraph [ref=e159]: Tell us about your site, budget, and timeline — we’ll come back with practical next steps.
+        - link "Request a quote" [ref=e161] [cursor=pointer]:
+          - /url: /contact
+    - region "Explore more" [ref=e162]:
+      - generic [ref=e163]:
+        - link "See our gallery Get inspired by recent builds across Nelson Tasman." [ref=e164] [cursor=pointer]:
+          - /url: /gallery
+          - heading "See our gallery" [level=3] [ref=e165]
+          - paragraph [ref=e166]: Get inspired by recent builds across Nelson Tasman.
+        - link "About Southside Local team, straight talk, and quality workmanship." [ref=e167] [cursor=pointer]:
+          - /url: /about
+          - heading "About Southside" [level=3] [ref=e168]
+          - paragraph [ref=e169]: Local team, straight talk, and quality workmanship.
+        - link "Get in touch Book a site visit or request a detailed quote." [ref=e170] [cursor=pointer]:
+          - /url: /contact
+          - heading "Get in touch" [level=3] [ref=e171]
+          - paragraph [ref=e172]: Book a site visit or request a detailed quote.
+  - contentinfo [ref=e173]:
+    - generic [ref=e174]:
+      - generic [ref=e175]:
+        - generic [ref=e176]:
+          - img "Southside Construction" [ref=e177]
+          - generic [ref=e178]: Southside Construction
+        - paragraph [ref=e179]: Quality residential and light commercial building in Nelson & Tasman. New builds, renovations, decks, and more — delivered with craftsmanship and integrity.
+        - generic [ref=e180]:
+          - generic [ref=e181]: Locally owned
+          - generic [ref=e182]: •
+          - generic [ref=e183]: Quality workmanship
+      - generic [ref=e184]:
+        - generic [ref=e185]:
+          - heading "Company" [level=3] [ref=e186]
+          - list [ref=e187]:
+            - listitem [ref=e188]:
+              - link "About" [ref=e189] [cursor=pointer]:
+                - /url: /about
+            - listitem [ref=e190]:
+              - link "Gallery" [ref=e191] [cursor=pointer]:
+                - /url: /gallery
+            - listitem [ref=e192]:
+              - link "Contact" [ref=e193] [cursor=pointer]:
+                - /url: /contact
+        - generic [ref=e194]:
+          - heading "Services" [level=3] [ref=e195]
+          - list [ref=e196]:
+            - listitem [ref=e197]: New Builds
+            - listitem [ref=e198]: Renovations
+            - listitem [ref=e199]: Extensions
+            - listitem [ref=e200]: Decks & Outdoor
+        - generic [ref=e201]:
+          - heading "Areas" [level=3] [ref=e202]
+          - list [ref=e203]:
+            - listitem [ref=e204]: Nelson
+            - listitem [ref=e205]: Tasman
+            - listitem [ref=e206]: Richmond
+            - listitem [ref=e207]: Motueka
+    - generic [ref=e209]:
+      - text: © 2026 Southside Construction · Nelson Tasman, New Zealand ·
+      - link "Contact us" [ref=e210] [cursor=pointer]:
+        - /url: /contact
+  - generic [ref=e213]:
+    - button "Menu" [ref=e214]:
+      - img [ref=e216]
+      - generic: Menu
+    - button "Inspect" [ref=e220]:
+      - img [ref=e222]
+      - generic: Inspect
+    - button "Audit" [ref=e224]:
+      - img [ref=e226]
+      - generic: Audit
+    - button "Settings" [ref=e229]:
+      - img [ref=e231]
+      - generic: Settings

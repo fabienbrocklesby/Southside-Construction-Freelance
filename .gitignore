@@ -53,6 +53,7 @@ ehthumbs.db
 # Deployment/platform folders
 .vercel/
 .netlify/
+.wrangler/
 
 # Sass/PostCSS caches
 .sass-cache/

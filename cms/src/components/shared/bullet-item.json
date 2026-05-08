@@ -1,0 +1,14 @@
+{
+  "collectionName": "components_shared_bullet_items",
+  "info": {
+    "displayName": "Bullet Item",
+    "description": "A short bullet point used in editable page sections."
+  },
+  "options": {},
+  "attributes": {
+    "text": {
+      "type": "string",
+      "required": true
+    }
+  }
+}

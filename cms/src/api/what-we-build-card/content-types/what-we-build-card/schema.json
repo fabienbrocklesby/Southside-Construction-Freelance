@@ -1,0 +1,46 @@
+{
+  "kind": "collectionType",
+  "collectionName": "what_we_build_cards",
+  "info": {
+    "singularName": "what-we-build-card",
+    "pluralName": "what-we-build-cards",
+    "displayName": "What We Build Card",
+    "description": "Editable service cards shown in the home page What we build section."
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text",
+      "required": true
+    },
+    "bulletPoints": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.bullet-item"
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "imageAltText": {
+      "type": "string",
+      "required": true
+    },
+    "order": {
+      "type": "integer",
+      "required": true,
+      "default": 0
+    }
+  }
+}

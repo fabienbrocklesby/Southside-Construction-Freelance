@@ -1,0 +1,166 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - navigation [ref=e3]:
+      - link "Southside Construction home" [ref=e5] [cursor=pointer]:
+        - /url: /
+        - img "Southside Construction" [ref=e7]
+      - list [ref=e9]:
+        - listitem [ref=e10]:
+          - link "Home" [ref=e11] [cursor=pointer]:
+            - /url: /
+        - listitem [ref=e12]:
+          - link "About" [ref=e13] [cursor=pointer]:
+            - /url: /about
+        - listitem [ref=e14]:
+          - link "Gallery" [ref=e15] [cursor=pointer]:
+            - /url: /gallery
+        - listitem [ref=e16]:
+          - link "Contact" [ref=e17] [cursor=pointer]:
+            - /url: /contact
+  - main [ref=e18]:
+    - region "About Southside Construction" [ref=e19]:
+      - img "Southside Construction project in Nelson Tasman" [ref=e20]
+      - generic [ref=e23]:
+        - heading "About Southside Construction" [level=1] [ref=e24]
+        - paragraph [ref=e25]: Local builders delivering new homes, renovations, sheds, decks and fencing across Nelson & Tasman. We combine tidy workmanship with straight-up communication and reliable timelines.
+    - region "Our story" [ref=e26]:
+      - generic [ref=e27]:
+        - generic [ref=e28]:
+          - heading "Our story" [level=2] [ref=e29]
+          - paragraph [ref=e30]: We started Southside Construction to build well-crafted homes and practical structures that suit our region. That means designing for Tasman’s weather, using durable materials, and paying attention to the details you’ll live with every day.
+          - paragraph [ref=e31]: From the first site visit to handover, you’ll get clear timelines, tidy sites, and honest updates. We value relationships with clients, designers, and local suppliers — because great outcomes come from a team that works well together.
+          - generic [ref=e32]:
+            - link "Book a chat" [ref=e33] [cursor=pointer]:
+              - /url: /contact
+            - link "See our work" [ref=e34] [cursor=pointer]:
+              - /url: /gallery
+        - generic [ref=e35]:
+          - img "Framing detail on site" [ref=e36]
+          - img "Outdoor living space built by Southside" [ref=e37]
+          - img "Finished exterior elevation" [ref=e38]
+    - region "What we stand for" [ref=e39]:
+      - heading "What we stand for" [level=2] [ref=e40]
+      - generic [ref=e41]:
+        - generic [ref=e42]:
+          - heading "Craftsmanship" [level=3] [ref=e43]
+          - paragraph [ref=e44]: Tidy work, accurate lines, and durable assemblies designed for local conditions.
+        - generic [ref=e45]:
+          - heading "Communication" [level=3] [ref=e46]
+          - paragraph [ref=e47]: Clear scopes, regular updates, and no surprises on timelines or cost drivers.
+        - generic [ref=e48]:
+          - heading "Safety" [level=3] [ref=e49]
+          - paragraph [ref=e50]: Qualified team, safe sites, and tidy operations that respect your home.
+        - generic [ref=e51]:
+          - heading "Sustainability" [level=3] [ref=e52]
+          - paragraph [ref=e53]: Smart material choices and energy-efficient builds that perform over time.
+    - region "Licensed. Local. Reliable." [ref=e54]:
+      - heading "Licensed. Local. Reliable." [level=2] [ref=e55]
+      - generic [ref=e56]:
+        - generic [ref=e57]:
+          - generic [ref=e58]: Licensed
+          - paragraph [ref=e59]: Qualified, licensed building practitioners.
+        - generic [ref=e60]:
+          - generic [ref=e61]: Insured
+          - paragraph [ref=e62]: Appropriate insurances and health & safety policies for peace of mind.
+        - generic [ref=e63]:
+          - generic [ref=e64]: Local suppliers
+          - paragraph [ref=e65]: We source materials locally where possible for quality and support.
+    - region "Where and what we build" [ref=e66]:
+      - generic [ref=e67]:
+        - generic [ref=e68]:
+          - heading "Where and what we build" [level=2] [ref=e69]
+          - paragraph [ref=e70]: We cover Nelson, Tasman, Richmond, Motueka, Mapua, and nearby communities. From new house builds to sheds, renovations, and outdoor living - we tailor the approach to your site and lifestyle.
+          - list [ref=e71]:
+            - listitem [ref=e72]: New homes
+            - listitem [ref=e73]: Sheds & workshops
+            - listitem [ref=e74]: Renovations
+            - listitem [ref=e75]: Extensions
+            - listitem [ref=e76]: Decks & fencing
+            - listitem [ref=e77]: Re-clads
+          - paragraph [ref=e78]: Got something else in mind? We also take on custom projects after a quick conversation to scope it properly.
+          - generic [ref=e79]:
+            - link "Ask about your project" [ref=e80] [cursor=pointer]:
+              - /url: /contact
+            - link "Project gallery" [ref=e81] [cursor=pointer]:
+              - /url: /gallery
+        - generic [ref=e82]:
+          - img "Deck and railing detail" [ref=e83]
+          - img "Shed exterior with durable cladding" [ref=e84]
+          - img "Renovated interior" [ref=e85]
+    - region "Our approach" [ref=e86]:
+      - heading "Our approach" [level=2] [ref=e87]
+      - generic [ref=e88]:
+        - generic [ref=e89]:
+          - heading "Plan with purpose" [level=3] [ref=e90]
+          - paragraph [ref=e91]: We listen first, then shape a scope and timeline that fits your budget and goals.
+        - generic [ref=e92]:
+          - heading "Build with care" [level=3] [ref=e93]
+          - paragraph [ref=e94]: Clean sites, qualified builders, and attention to the little things that last.
+        - generic [ref=e95]:
+          - heading "Stand behind it" [level=3] [ref=e96]
+          - paragraph [ref=e97]: We hand over thoroughly and stay available — no loose ends.
+    - region "Contact Southside" [ref=e98]:
+      - img "Outdoor deck and entertaining area" [ref=e99]
+      - generic [ref=e102]:
+        - heading "Let’s talk about your build" [level=2] [ref=e103]
+        - paragraph [ref=e104]: Tell us what you’re planning — we’ll outline practical next steps and a realistic timeline.
+        - generic [ref=e105]:
+          - link "Request a quote" [ref=e106] [cursor=pointer]:
+            - /url: /contact
+          - link "Book a site visit" [ref=e107] [cursor=pointer]:
+            - /url: /contact
+  - contentinfo [ref=e108]:
+    - generic [ref=e109]:
+      - generic [ref=e110]:
+        - generic [ref=e111]:
+          - img "Southside Construction" [ref=e112]
+          - generic [ref=e113]: Southside Construction
+        - paragraph [ref=e114]: Quality residential and light commercial building in Nelson & Tasman. New builds, renovations, decks, and more — delivered with craftsmanship and integrity.
+        - generic [ref=e115]:
+          - generic [ref=e116]: Locally owned
+          - generic [ref=e117]: •
+          - generic [ref=e118]: Quality workmanship
+      - generic [ref=e119]:
+        - generic [ref=e120]:
+          - heading "Company" [level=3] [ref=e121]
+          - list [ref=e122]:
+            - listitem [ref=e123]:
+              - link "About" [ref=e124] [cursor=pointer]:
+                - /url: /about
+            - listitem [ref=e125]:
+              - link "Gallery" [ref=e126] [cursor=pointer]:
+                - /url: /gallery
+            - listitem [ref=e127]:
+              - link "Contact" [ref=e128] [cursor=pointer]:
+                - /url: /contact
+        - generic [ref=e129]:
+          - heading "Services" [level=3] [ref=e130]
+          - list [ref=e131]:
+            - listitem [ref=e132]: New Builds
+            - listitem [ref=e133]: Renovations
+            - listitem [ref=e134]: Extensions
+            - listitem [ref=e135]: Decks & Outdoor
+        - generic [ref=e136]:
+          - heading "Areas" [level=3] [ref=e137]
+          - list [ref=e138]:
+            - listitem [ref=e139]: Nelson
+            - listitem [ref=e140]: Tasman
+            - listitem [ref=e141]: Richmond
+            - listitem [ref=e142]: Motueka
+    - generic [ref=e144]:
+      - text: © 2026 Southside Construction · Nelson Tasman, New Zealand ·
+      - link "Contact us" [ref=e145] [cursor=pointer]:
+        - /url: /contact
+  - generic [ref=e148]:
+    - button "Menu" [ref=e149]:
+      - img [ref=e151]
+      - generic: Menu
+    - button "Inspect" [ref=e155]:
+      - img [ref=e157]
+      - generic: Inspect
+    - button "Audit" [ref=e159]:
+      - img [ref=e161]
+      - generic: Audit
+    - button "Settings" [ref=e164]:
+      - img [ref=e166]
+      - generic: Settings

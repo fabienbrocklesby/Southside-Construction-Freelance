@@ -2,12 +2,31 @@
   "name": "southside-construction",
   "type": "module",
   "version": "1.0.0",
+  "workspaces": [
+    "cms"
+  ],
   "scripts": {
-    "dev": "astro dev",
+    "dev": "npm run dev:stop && concurrently --kill-others-on-fail --names site,cms --prefix-colors cyan,magenta \"npm run dev:site\" \"npm run cms:develop\"",
+    "dev:stop": "node scripts/kill-ports.mjs 4321 1337 8788",
+    "predev:site": "node scripts/kill-ports.mjs 4321",
+    "dev:site": "astro dev --host 0.0.0.0 --port 4321",
     "build": "astro build",
     "preview": "astro preview",
+    "pages:dev": "npm run dev:stop && npm run build && wrangler pages dev dist --port 8788",
+    "pages:deploy": "npm run build && wrangler pages deploy",
+    "cf:login": "wrangler login",
+    "cf:whoami": "wrangler whoami",
+    "cf:pages:create": "wrangler pages project create southside-construction",
+    "cf:r2:create": "wrangler r2 bucket create southside-construction-strapi-media",
+    "cf:r2:list": "wrangler r2 bucket list",
+    "precms:develop": "node scripts/kill-ports.mjs 1337",
+    "cms:develop": "npm --workspace cms run develop",
+    "cms:build": "npm --workspace cms run build",
+    "cms:start": "npm --workspace cms run start",
+    "cms:backup": "npm --workspace cms run db:backup",
+    "cms:seed:current": "node cms/scripts/seed-current-content.mjs",
     "images:fullsize": "node scripts/optimize-fullsize.mjs",
-    "images:compress": "mkdir -p public/.optimized/images public/.optimized/logos && imagemin 'public/images/*.{png,PNG}' --plugin=pngquant --out-dir='public/.optimized/images' && imagemin 'public/images/*.{jpg,jpeg,JPG,JPEG}' --plugin=mozjpeg --out-dir='public/.optimized/images' && imagemin 'public/logos/*.{png,PNG}' --plugin=pngquant --out-dir='public/.optimized/logos' && rsync -a public/.optimized/images/ public/images/ && rsync -a public/.optimized/logos/ public/logos/ && rm -rf public/.optimized",
+    "images:compress": "npm run images:fullsize",
     "images:thumbs": "node scripts/gen-thumbs.mjs",
     "images:refresh": "npm run images:fullsize && npm run images:thumbs",
     "postbuild": "npm run images:thumbs"
@@ -19,9 +38,8 @@
     "tailwindcss": "^3.4.0"
   },
   "devDependencies": {
-    "imagemin-cli": "^8.0.0",
-    "imagemin-mozjpeg": "^10.0.0",
-    "imagemin-pngquant": "^10.0.0",
-    "sharp": "^0.34.3"
+    "concurrently": "^9.2.1",
+    "sharp": "^0.34.3",
+    "wrangler": "^4.87.0"
   }
 }

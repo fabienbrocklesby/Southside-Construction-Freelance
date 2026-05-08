@@ -1,0 +1,6 @@
+# Used by `npm run pages:dev` for the Cloudflare Pages contact function.
+CORS_ORIGINS=http://localhost:4321,http://localhost:8788
+FROM_EMAIL=
+SOUTHSIDE_EMAIL=
+ZEPTO_API_KEY=
+ZEPTO_API_BASE_URL=https://api.zeptomail.com.au/v1.1/email
