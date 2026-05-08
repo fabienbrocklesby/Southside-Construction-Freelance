@@ -83,7 +83,7 @@ Create R2 S3 API credentials in Cloudflare with object read/write access to this
 ```env
 R2_UPLOAD_ENABLED=true
 R2_ACCESS_KEY_ID=...
-R2_ACCESS_SECRET=...
+R2_SECRET_ACCESS_KEY=...
 R2_BUCKET=southside-construction-strapi-media
 R2_ENDPOINT=https://9f08cc5b560a2570e12982550b39f6ac.r2.cloudflarestorage.com
 R2_PUBLIC_URL=https://pub-8fffd787049d49baa5ea1904061fcd51.r2.dev
@@ -108,8 +108,9 @@ docker compose up -d --build
 The compose file mounts named volumes:
 
 - `strapi-data` -> `/srv/app/data` for SQLite.
-- `strapi-uploads` -> `/srv/app/public/uploads` as a fallback local upload volume.
 - `strapi-backups` -> `/srv/app/backups` for backup output.
+
+There is intentionally no persistent `/srv/app/public/uploads` volume. Media should go to R2; if R2 is misconfigured, Strapi should fail startup rather than quietly storing uploads on the server.
 
 Production SQLite path:
 
